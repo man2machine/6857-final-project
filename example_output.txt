@@ -1,0 +1,15 @@
+
+State Size ... 64
+
+Test Vectors:
+Acorn128 #1 ... Passed
+Acorn128 #2 ... Passed
+Acorn128 #3 ... Passed
+Acorn128 #4 ... Passed
+Acorn128 #5 ... Passed
+
+Performance Tests:
+Acorn128 #4 SetKey ... 161.65us per operation, 6186.36 per second
+Acorn128 #4 Encrypt ... 0.69us per byte, 1453686.50 bytes per second
+Acorn128 #4 Decrypt ... 0.71us per byte, 1410872.50 bytes per second
+Acorn128 #4 AddAuthData ...
