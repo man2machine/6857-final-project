@@ -1,0 +1,1 @@
+Copy these directories to the Arduino sketchbook folder and open the .ino files in the examples to run the tests.
