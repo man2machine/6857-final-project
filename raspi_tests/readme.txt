@@ -1,1 +1,0 @@
-The .ino files in the example folders in external_arduino/ were converted using the regex rules in regex_stuff.txt to create the raspi tests

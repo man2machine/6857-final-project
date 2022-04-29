@@ -21,7 +21,7 @@
  */
 
 /*
-This example runs tests on the AES implementation to verify correct behaviour.
+This example runs tests on the small AES implementation to verify behaviour.
 */
 
 
@@ -79,9 +79,8 @@ static TestVector const testVectorAES256 = {
                     0xEA, 0xFC, 0x49, 0x90, 0x4B, 0x49, 0x60, 0x89}
 };
 
-AES128 aes128;
-AES192 aes192;
-AES256 aes256;
+AESSmall128 aes128;
+AESSmall256 aes256;
 
 byte buffer[16];
 
@@ -160,24 +159,20 @@ void setup()
     std::cout << std::endl;
 
     std::cout << "State Sizes:" << std::endl;
-    std::cout << "AES128 ... ";
-    std::cout << sizeof(AES128) << std::endl;
-    std::cout << "AES192 ... ";
-    std::cout << sizeof(AES192) << std::endl;
-    std::cout << "AES256 ... ";
-    std::cout << sizeof(AES256) << std::endl;
+    std::cout << "AESSmall128 ... ";
+    std::cout << sizeof(AESSmall128) << std::endl;
+    std::cout << "AESSmall256 ... ";
+    std::cout << sizeof(AESSmall256) << std::endl;
     std::cout << std::endl;
 
     std::cout << "Test Vectors:" << std::endl;
     testCipher(&aes128, &testVectorAES128);
-    testCipher(&aes192, &testVectorAES192);
     testCipher(&aes256, &testVectorAES256);
 
     std::cout << std::endl;
 
     std::cout << "Performance Tests:" << std::endl;
     perfCipher(&aes128, &testVectorAES128);
-    perfCipher(&aes192, &testVectorAES192);
     perfCipher(&aes256, &testVectorAES256);
 }
 

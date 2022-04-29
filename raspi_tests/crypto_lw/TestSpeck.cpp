@@ -1,9 +1,40 @@
+/*
+ * Copyright (C) 2015 Southern Storm Software, Pty Ltd.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ */
+
+/*
+This example runs tests on the Speck implementation to verify correct behaviour.
+*/
+
+
 #include <iostream>
 #include <chrono>
 
-#define byte uint8_t
+unsigned long micros()
+{
+    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+}
 
 #include <Piduino.h>
+
 #include <Crypto.h>
 #include <Speck.h>
 #include <SpeckSmall.h>
@@ -81,11 +112,6 @@ void testCipher(BlockCipher *cipher, const struct TestVector *test, size_t keySi
         std::cout << "Failed" << std::endl;
 }
 
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 void perfCipher(BlockCipher *cipher, const struct TestVector *test, size_t keySize, bool decryption = true)
 {
     unsigned long start;
@@ -140,6 +166,8 @@ void perfCipher(BlockCipher *cipher, const struct TestVector *test, size_t keySi
 
 void setup()
 {
+    
+
     std::cout << std::endl;
 
     std::cout << "State Sizes:" << std::endl;

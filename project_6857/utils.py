@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon May  4 18:26:26 2020
+Created on Thu Apr 28 16:14:00 2022
 
 @author: Shahir
 """
@@ -8,8 +8,7 @@ Created on Mon May  4 18:26:26 2020
 import os
 import abc
 import datetime
-
-import ujson as json
+import json
 
 import project_6857
 
