@@ -590,6 +590,8 @@ void setup()
 #endif
 }
 
+
 void loop()
 {
+    exit(0);
 }

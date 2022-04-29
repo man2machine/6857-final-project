@@ -336,6 +336,8 @@ void setup()
     perfHMAC(&sha256);
 }
 
+
 void loop()
 {
+    exit(0);
 }

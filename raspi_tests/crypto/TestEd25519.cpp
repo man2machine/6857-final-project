@@ -191,6 +191,8 @@ void setup()
     std::cout << std::endl;
 }
 
+
 void loop()
 {
+    exit(0);
 }

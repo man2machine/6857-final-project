@@ -564,6 +564,8 @@ void setup()
     delete eaxSpeckTiny;
 }
 
+
 void loop()
 {
+    exit(0);
 }

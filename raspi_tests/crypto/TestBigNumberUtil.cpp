@@ -384,6 +384,8 @@ void setup()
     testPackUnpack();
 }
 
+
 void loop()
 {
+    exit(0);
 }

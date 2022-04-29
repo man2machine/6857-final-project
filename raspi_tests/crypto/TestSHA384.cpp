@@ -266,6 +266,8 @@ void setup()
     perfFinalize(&sha384);
 }
 
+
 void loop()
 {
+    exit(0);
 }

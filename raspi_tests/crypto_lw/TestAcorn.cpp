@@ -421,6 +421,8 @@ void setup()
     perfCipher(&acorn, &testVectorAcorn128_4);
 }
 
+
 void loop()
 {
+    exit(0);
 }

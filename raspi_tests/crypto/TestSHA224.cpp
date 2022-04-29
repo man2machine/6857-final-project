@@ -329,6 +329,8 @@ void setup()
     perfHMAC(&sha224);
 }
 
+
 void loop()
 {
+    exit(0);
 }

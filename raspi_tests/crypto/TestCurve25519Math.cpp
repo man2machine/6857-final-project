@@ -689,6 +689,8 @@ void setup()
     testSqrt();
 }
 
+
 void loop()
 {
+    exit(0);
 }

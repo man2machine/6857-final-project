@@ -324,6 +324,8 @@ void setup()
     perfFinalize(&sha3_512);
 }
 
+
 void loop()
 {
+    exit(0);
 }

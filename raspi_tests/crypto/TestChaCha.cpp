@@ -428,6 +428,8 @@ void setup()
     perfCipher(&chacha, &testVectorChaCha8_256);
 }
 
+
 void loop()
 {
+    exit(0);
 }

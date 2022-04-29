@@ -61,7 +61,10 @@ void printHex(const byte *data, unsigned len)
     std::cout << std::endl;
 }
 
-void loop() {
+
+void loop()
+{
+    exit(0);
     // Track changes to the calibration state on the noise source.
     bool newCalibrating = noise.calibrating();
     if (newCalibrating != calibrating) {

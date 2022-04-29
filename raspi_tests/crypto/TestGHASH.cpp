@@ -251,6 +251,8 @@ void setup()
     perfGHASHFinalize(&ghash);
 }
 
+
 void loop()
 {
+    exit(0);
 }

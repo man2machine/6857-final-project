@@ -272,6 +272,8 @@ void setup()
     perfFinalize(&sha512);
 }
 
+
 void loop()
 {
+    exit(0);
 }

@@ -216,6 +216,8 @@ void setup()
     perfCipher(&speckTiny, &testVectorSpeck256, 32, false);
 }
 
+
 void loop()
 {
+    exit(0);
 }

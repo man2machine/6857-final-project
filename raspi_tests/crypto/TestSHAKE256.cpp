@@ -371,6 +371,8 @@ void setup()
     perfEncrypt(&shake256);
 }
 
+
 void loop()
 {
+    exit(0);
 }

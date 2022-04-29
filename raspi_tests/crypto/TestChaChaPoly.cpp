@@ -458,6 +458,8 @@ void setup()
     perfCipher(&chachapoly, &testVectorChaChaPoly_1);
 }
 
+
 void loop()
 {
+    exit(0);
 }

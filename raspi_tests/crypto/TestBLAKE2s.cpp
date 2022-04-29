@@ -435,6 +435,8 @@ void setup()
     perfHMAC(&blake2s);
 }
 
+
 void loop()
 {
+    exit(0);
 }

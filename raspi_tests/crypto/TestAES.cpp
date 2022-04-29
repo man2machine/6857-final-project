@@ -181,6 +181,8 @@ void setup()
     perfCipher(&aes256, &testVectorAES256);
 }
 
+
 void loop()
 {
+    exit(0);
 }

@@ -416,6 +416,8 @@ void setup()
     perfFinalize(&blake2b);
 }
 
+
 void loop()
 {
+    exit(0);
 }

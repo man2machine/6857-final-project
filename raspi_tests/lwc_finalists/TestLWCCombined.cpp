@@ -536,6 +536,8 @@ void setup()
     perfMasked(&xoodyak_cipher, &xoodyak_masked_cipher);
 }
 
+
 void loop()
 {
+    exit(0);
 }

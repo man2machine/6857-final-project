@@ -244,6 +244,8 @@ void setup()
     perfPoly1305Finalize(&poly1305);
 }
 
+
 void loop()
 {
+    exit(0);
 }

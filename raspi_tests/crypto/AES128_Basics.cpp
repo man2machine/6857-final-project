@@ -78,7 +78,10 @@ void setup() {
 
 }
 
-void loop() {
+
+void loop()
+{
+    exit(0);
   // put your main code here, to run repeatedly:
 
 }

@@ -237,6 +237,8 @@ void setup()
     perfCipherDecrypt("AES-128-CTR Decrypt", &ctraes128, &testVectorAES128CTR1);
 }
 
+
 void loop()
 {
+    exit(0);
 }

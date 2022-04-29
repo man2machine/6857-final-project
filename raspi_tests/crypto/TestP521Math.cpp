@@ -618,6 +618,8 @@ void setup()
     testRecip();
 }
 
+
 void loop()
 {
+    exit(0);
 }
