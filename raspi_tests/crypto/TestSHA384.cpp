@@ -25,15 +25,8 @@ This example runs tests on the SHA384 implementation to verify correct behaviour
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <SHA384.h>
@@ -109,8 +102,8 @@ void testHash(Hash *hash, const struct TestHashVector *test)
 {
     bool ok;
 
-    std::cout << test->name;
-    std::cout << " ... ";
+    Serial.print(test->name);
+    Serial.print(" ... ");
 
     ok  = testHash_N(hash, test, strlen(test->data));
     ok &= testHash_N(hash, test, 1);
@@ -124,9 +117,9 @@ void testHash(Hash *hash, const struct TestHashVector *test)
     ok &= testHash_N(hash, test, 64);
 
     if (ok)
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 }
 
 void perfHash(Hash *hash)
@@ -135,7 +128,7 @@ void perfHash(Hash *hash)
     unsigned long elapsed;
     int count;
 
-    std::cout << "Hashing ... ";
+    Serial.print("Hashing ... ");
 
     for (size_t posn = 0; posn < sizeof(buffer); ++posn)
         buffer[posn] = (uint8_t)posn;
@@ -147,10 +140,10 @@ void perfHash(Hash *hash)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (sizeof(buffer) * 250.0);
-    std::cout << "us per byte, ";
-    std::cout << (sizeof(buffer) * 250.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (sizeof(buffer) * 250.0));
+    Serial.print("us per byte, ");
+    Serial.print((sizeof(buffer) * 250.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 // Very simple method for hashing a HMAC inner or outer key.
@@ -187,9 +180,9 @@ void testHMAC(Hash *hash, size_t keyLen)
 {
     uint8_t result[HASH_SIZE];
 
-    std::cout << "HMAC-SHA-384 keysize=";
-    std::cout << keyLen;
-    std::cout << " ... ";
+    Serial.print("HMAC-SHA-384 keysize=");
+    Serial.print(keyLen);
+    Serial.print(" ... ");
 
     // Construct the expected result with a simple HMAC implementation.
     memset(buffer, (uint8_t)keyLen, keyLen);
@@ -211,9 +204,9 @@ void testHMAC(Hash *hash, size_t keyLen)
 
     // Check the result.
     if (!memcmp(result, buffer, HASH_SIZE))
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 }
 
 void perfFinalize(Hash *hash)
@@ -222,7 +215,7 @@ void perfFinalize(Hash *hash)
     unsigned long elapsed;
     int count;
 
-    std::cout << "Finalizing ... ";
+    Serial.print("Finalizing ... ");
 
     hash->reset();
     hash->update("abc", 3);
@@ -232,23 +225,23 @@ void perfFinalize(Hash *hash)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / 1000.0;
-    std::cout << "us per op, ";
-    std::cout << (1000.0 * 1000000.0) / elapsed;
-    std::cout << " ops per second" << std::endl;
+    Serial.print(elapsed / 1000.0);
+    Serial.print("us per op, ");
+    Serial.print((1000.0 * 1000000.0) / elapsed);
+    Serial.println(" ops per second");
 }
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "State Size ...";
-    std::cout << sizeof(SHA384) << std::endl;
-    std::cout << std::endl;
+    Serial.print("State Size ...");
+    Serial.println(sizeof(SHA384));
+    Serial.println();
 
-    std::cout << "Test Vectors:" << std::endl;
+    Serial.println("Test Vectors:");
     testHash(&sha384, &testVectorSHA384_1);
     testHash(&sha384, &testVectorSHA384_2);
     testHash(&sha384, &testVectorSHA384_3);
@@ -259,13 +252,12 @@ void setup()
     testHMAC(&sha384, BLOCK_SIZE + 1);
     testHMAC(&sha384, BLOCK_SIZE + 2);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "Performance Tests:" << std::endl;
+    Serial.println("Performance Tests:");
     perfHash(&sha384);
     perfFinalize(&sha384);
 }
-
 
 void loop()
 {

@@ -25,15 +25,8 @@ This example runs tests on the CTR implementation to verify correct behaviour.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <AES.h>
@@ -112,11 +105,11 @@ bool testCipher_N(Cipher *cipher, const struct TestVector *test, size_t inc)
 
     cipher->clear();
     if (!cipher->setKey(test->key, cipher->keySize())) {
-        std::cout << "setKey ";
+        Serial.print("setKey ");
         return false;
     }
     if (!cipher->setIV(test->iv, cipher->ivSize())) {
-        std::cout << "setIV ";
+        Serial.print("setIV ");
         return false;
     }
 
@@ -130,9 +123,9 @@ bool testCipher_N(Cipher *cipher, const struct TestVector *test, size_t inc)
     }
 
     if (memcmp(output, test->ciphertext, test->size) != 0) {
-        std::cout << output[0], HEX;
-        std::cout << "->";
-        std::cout << test->ciphertext[0], HEX;
+        Serial.print(output[0], HEX);
+        Serial.print("->");
+        Serial.print(test->ciphertext[0], HEX);
         return false;
     }
 
@@ -156,8 +149,8 @@ void testCipher(Cipher *cipher, const struct TestVector *test)
 {
     bool ok;
 
-    std::cout << test->name;
-    std::cout << " ... ";
+    Serial.print(test->name);
+    Serial.print(" ... ");
 
     ok  = testCipher_N(cipher, test, test->size);
     ok &= testCipher_N(cipher, test, 1);
@@ -168,9 +161,9 @@ void testCipher(Cipher *cipher, const struct TestVector *test)
     ok &= testCipher_N(cipher, test, 16);
 
     if (ok)
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 }
 
 void perfCipherEncrypt(const char *name, Cipher *cipher, const struct TestVector *test)
@@ -179,8 +172,8 @@ void perfCipherEncrypt(const char *name, Cipher *cipher, const struct TestVector
     unsigned long elapsed;
     int count;
 
-    std::cout << name;
-    std::cout << " ... ";
+    Serial.print(name);
+    Serial.print(" ... ");
 
     cipher->setKey(test->key, cipher->keySize());
     cipher->setIV(test->iv, cipher->ivSize());
@@ -190,10 +183,10 @@ void perfCipherEncrypt(const char *name, Cipher *cipher, const struct TestVector
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (sizeof(buffer) * 500.0);
-    std::cout << "us per byte, ";
-    std::cout << (sizeof(buffer) * 500.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (sizeof(buffer) * 500.0));
+    Serial.print("us per byte, ");
+    Serial.print((sizeof(buffer) * 500.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfCipherDecrypt(const char *name, Cipher *cipher, const struct TestVector *test)
@@ -202,8 +195,8 @@ void perfCipherDecrypt(const char *name, Cipher *cipher, const struct TestVector
     unsigned long elapsed;
     int count;
 
-    std::cout << name;
-    std::cout << " ... ";
+    Serial.print(name);
+    Serial.print(" ... ");
 
     cipher->setKey(test->key, cipher->keySize());
     cipher->setIV(test->iv, cipher->ivSize());
@@ -213,30 +206,29 @@ void perfCipherDecrypt(const char *name, Cipher *cipher, const struct TestVector
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (sizeof(buffer) * 500.0);
-    std::cout << "us per byte, ";
-    std::cout << (sizeof(buffer) * 500.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (sizeof(buffer) * 500.0));
+    Serial.print("us per byte, ");
+    Serial.print((sizeof(buffer) * 500.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "Test Vectors:" << std::endl;
+    Serial.println("Test Vectors:");
     testCipher(&ctraes128, &testVectorAES128CTR1);
     testCipher(&ctraes128, &testVectorAES128CTR2);
     testCipher(&ctraes128, &testVectorAES128CTR3);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "Performance Tests:" << std::endl;
+    Serial.println("Performance Tests:");
     perfCipherEncrypt("AES-128-CTR Encrypt", &ctraes128, &testVectorAES128CTR1);
     perfCipherDecrypt("AES-128-CTR Decrypt", &ctraes128, &testVectorAES128CTR1);
 }
-
 
 void loop()
 {

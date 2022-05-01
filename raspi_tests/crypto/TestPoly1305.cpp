@@ -25,15 +25,8 @@ This example runs tests on the Poly1305 implementation to verify correct behavio
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <Poly1305.h>
@@ -134,8 +127,8 @@ void testPoly1305(Poly1305 *hash, const struct TestPoly1305Vector *test)
 {
     bool ok;
 
-    std::cout << test->name;
-    std::cout << " ... ";
+    Serial.print(test->name);
+    Serial.print(" ... ");
 
     ok  = testPoly1305_N(hash, test, test->dataLen);
     ok &= testPoly1305_N(hash, test, 1);
@@ -149,9 +142,9 @@ void testPoly1305(Poly1305 *hash, const struct TestPoly1305Vector *test)
     ok &= testPoly1305_N(hash, test, 64);
 
     if (ok)
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 }
 
 void perfPoly1305(Poly1305 *hash)
@@ -160,7 +153,7 @@ void perfPoly1305(Poly1305 *hash)
     unsigned long elapsed;
     int count;
 
-    std::cout << "Hashing ... ";
+    Serial.print("Hashing ... ");
 
     for (size_t posn = 0; posn < sizeof(buffer); ++posn)
         buffer[posn] = (uint8_t)posn;
@@ -172,10 +165,10 @@ void perfPoly1305(Poly1305 *hash)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (sizeof(buffer) * 1000.0);
-    std::cout << "us per byte, ";
-    std::cout << (sizeof(buffer) * 1000.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (sizeof(buffer) * 1000.0));
+    Serial.print("us per byte, ");
+    Serial.print((sizeof(buffer) * 1000.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfPoly1305SetKey(Poly1305 *hash)
@@ -184,7 +177,7 @@ void perfPoly1305SetKey(Poly1305 *hash)
     unsigned long elapsed;
     int count;
 
-    std::cout << "Set Key ... ";
+    Serial.print("Set Key ... ");
 
     start = micros();
     for (count = 0; count < 1000; ++count) {
@@ -192,10 +185,10 @@ void perfPoly1305SetKey(Poly1305 *hash)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / 1000.0;
-    std::cout << "us per op, ";
-    std::cout << (1000.0 * 1000000.0) / elapsed;
-    std::cout << " ops per second" << std::endl;
+    Serial.print(elapsed / 1000.0);
+    Serial.print("us per op, ");
+    Serial.print((1000.0 * 1000000.0) / elapsed);
+    Serial.println(" ops per second");
 }
 
 void perfPoly1305Finalize(Poly1305 *hash)
@@ -204,7 +197,7 @@ void perfPoly1305Finalize(Poly1305 *hash)
     unsigned long elapsed;
     int count;
 
-    std::cout << "Finalize ... ";
+    Serial.print("Finalize ... ");
 
     hash->reset(testVectorPoly1305_1.key);
     hash->update("abc", 3);
@@ -214,36 +207,35 @@ void perfPoly1305Finalize(Poly1305 *hash)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / 1000.0;
-    std::cout << "us per op, ";
-    std::cout << (1000.0 * 1000000.0) / elapsed;
-    std::cout << " ops per second" << std::endl;
+    Serial.print(elapsed / 1000.0);
+    Serial.print("us per op, ");
+    Serial.print((1000.0 * 1000000.0) / elapsed);
+    Serial.println(" ops per second");
 }
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "State Size ...";
-    std::cout << sizeof(Poly1305) << std::endl;
-    std::cout << std::endl;
+    Serial.print("State Size ...");
+    Serial.println(sizeof(Poly1305));
+    Serial.println();
 
-    std::cout << "Test Vectors:" << std::endl;
+    Serial.println("Test Vectors:");
     testPoly1305(&poly1305, &testVectorPoly1305_1);
     testPoly1305(&poly1305, &testVectorPoly1305_2);
     testPoly1305(&poly1305, &testVectorPoly1305_3);
     testPoly1305(&poly1305, &testVectorPoly1305_4);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "Performance Tests:" << std::endl;
+    Serial.println("Performance Tests:");
     perfPoly1305(&poly1305);
     perfPoly1305SetKey(&poly1305);
     perfPoly1305Finalize(&poly1305);
 }
-
 
 void loop()
 {

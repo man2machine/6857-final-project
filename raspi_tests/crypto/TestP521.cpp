@@ -28,15 +28,8 @@ AVR platforms with 32K or less of flash memory.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <P521.h>
@@ -54,13 +47,13 @@ unsigned long micros()
 void printNumber(const char *name, const uint8_t *x, size_t len)
 {
     static const char hexchars[] = "0123456789ABCDEF";
-    std::cout << name;
-    std::cout << " = ";
+    Serial.print(name);
+    Serial.print(" = ");
     for (size_t posn = 0; posn < len; ++posn) {
-        std::cout << hexchars[(x[posn] >> 4) & 0x0F];
-        std::cout << hexchars[x[posn] & 0x0F];
+        Serial.print(hexchars[(x[posn] >> 4) & 0x0F]);
+        Serial.print(hexchars[x[posn] & 0x0F]);
     }
-    std::cout << std::endl;
+    Serial.println();
 }
 
 static int P521_memcmp_P(const void *s1, const void *s2, size_t len)
@@ -159,42 +152,42 @@ void testEval()
 
     // Evaluate the curve function and check the public keys.
     uint8_t result[132];
-    std::cout << "Fixed test vectors:" << std::endl;
-    std::cout << "Computing Alice's public key ... ";
+    Serial.println("Fixed test vectors:");
+    Serial.print("Computing Alice's public key ... ");
     Serial.flush();
     memcpy_P(alice_f, alice_private, 66);
     unsigned long start = micros();
     P521::eval(result, alice_f, 0);
     unsigned long elapsed = micros() - start;
     if (P521_memcmp_P(result, alice_public, 132) == 0) {
-        std::cout << "ok";
+        Serial.print("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", result, 132);
         printNumber("expected", alice_f, 132);
     }
-    std::cout << " (elapsed ";
-    std::cout << elapsed;
-    std::cout << " us)" << std::endl;
-    std::cout << "Computing Bob's public key ... ";
+    Serial.print(" (elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us)");
+    Serial.print("Computing Bob's public key ... ");
     Serial.flush();
     memcpy_P(bob_f, bob_private, 66);
     start = micros();
     P521::eval(result, bob_f, 0);
     elapsed = micros() - start;
     if (P521_memcmp_P(result, bob_public, 132) == 0) {
-        std::cout << "ok";
+        Serial.print("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", result, 132);
         printNumber("expected", bob_f, 132);
     }
-    std::cout << " (elapsed ";
-    std::cout << elapsed;
-    std::cout << " us)" << std::endl;
+    Serial.print(" (elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us)");
 
     // Compute the shared secret from each side.
-    std::cout << "Computing Alice's shared secret ... ";
+    Serial.print("Computing Alice's shared secret ... ");
     Serial.flush();
     memcpy_P(alice_f, alice_private, 66);
     memcpy_P(bob_k, bob_public, 132);
@@ -203,16 +196,16 @@ void testEval()
     P521::eval(result, alice_f, bob_k);
     elapsed = micros() - start;
     if (P521_memcmp_P(result, shared_secret, 66) == 0) {
-        std::cout << "ok";
+        Serial.print("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", result, 66);
         printNumber("expected", bob_f, 66);
     }
-    std::cout << " (elapsed ";
-    std::cout << elapsed;
-    std::cout << " us)" << std::endl;
-    std::cout << "Computing Bob's shared secret ... ";
+    Serial.print(" (elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us)");
+    Serial.print("Computing Bob's shared secret ... ");
     Serial.flush();
     memcpy_P(bob_f, bob_private, 66);
     memcpy_P(alice_k, alice_public, 132);
@@ -221,61 +214,61 @@ void testEval()
     P521::eval(result, bob_f, alice_k);
     elapsed = micros() - start;
     if (P521_memcmp_P(result, shared_secret, 66) == 0) {
-        std::cout << "ok";
+        Serial.print("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", result, 66);
         printNumber("expected", alice_f, 66);
     }
-    std::cout << " (elapsed ";
-    std::cout << elapsed;
-    std::cout << " us)" << std::endl;
+    Serial.print(" (elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us)");
 }
 
 void testDH()
 {
-    std::cout << "Diffie-Hellman key exchange:" << std::endl;
-    std::cout << "Generate random k/f for Alice ... ";
+    Serial.println("Diffie-Hellman key exchange:");
+    Serial.print("Generate random k/f for Alice ... ");
     Serial.flush();
     unsigned long start = micros();
     P521::dh1(alice_k, alice_f);
     unsigned long elapsed = micros() - start;
-    std::cout << "elapsed ";
-    std::cout << elapsed;
-    std::cout << " us" << std::endl;
+    Serial.print("elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us");
 
-    std::cout << "Generate random k/f for Bob ... ";
+    Serial.print("Generate random k/f for Bob ... ");
     Serial.flush();
     start = micros();
     P521::dh1(bob_k, bob_f);
     elapsed = micros() - start;
-    std::cout << "elapsed ";
-    std::cout << elapsed;
-    std::cout << " us" << std::endl;
+    Serial.print("elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us");
 
-    std::cout << "Generate shared secret for Alice ... ";
+    Serial.print("Generate shared secret for Alice ... ");
     Serial.flush();
     start = micros();
     P521::dh2(bob_k, alice_f);
     elapsed = micros() - start;
-    std::cout << "elapsed ";
-    std::cout << elapsed;
-    std::cout << " us" << std::endl;
+    Serial.print("elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us");
 
-    std::cout << "Generate shared secret for Bob ... ";
+    Serial.print("Generate shared secret for Bob ... ");
     Serial.flush();
     start = micros();
     P521::dh2(alice_k, bob_f);
     elapsed = micros() - start;
-    std::cout << "elapsed ";
-    std::cout << elapsed;
-    std::cout << " us" << std::endl;
+    Serial.print("elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us");
 
-    std::cout << "Check that the shared secrets match ... ";
+    Serial.print("Check that the shared secrets match ... ");
     if (memcmp(alice_f, bob_f, 66) == 0) {
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", alice_f, 66);
         printNumber("expected", bob_f, 66);
     }
@@ -428,8 +421,8 @@ void testSignCommon(const struct TestSignVector *_test, Hash *hash)
 
     memcpy_P(&test, _test, sizeof(test));
 
-    std::cout << test.name;
-    std::cout << " Sign ... ";
+    Serial.print(test.name);
+    Serial.print(" Sign ... ");
     Serial.flush();
 
     memcpy_P(privateKey, testKeyP521.privateKey, 66);
@@ -437,20 +430,20 @@ void testSignCommon(const struct TestSignVector *_test, Hash *hash)
     unsigned long start = micros();
     P521::sign(sig, privateKey, test.data, strlen(test.data), hash);
     unsigned long elapsed = micros() - start;
-    std::cout << elapsed;
-    std::cout << " us ... ";
+    Serial.print(elapsed);
+    Serial.print(" us ... ");
 
     bool ok = !memcmp(sig, test.signature, 132);
     if (ok) {
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", sig, 132);
         printNumber("expected", test.signature, 132);
     }
 
-    std::cout << test.name;
-    std::cout << " Verify ... ";
+    Serial.print(test.name);
+    Serial.print(" Verify ... ");
     Serial.flush();
 
     memcpy_P(publicKey, testKeyP521.publicKey, 132);
@@ -459,16 +452,16 @@ void testSignCommon(const struct TestSignVector *_test, Hash *hash)
     bool verified = P521::verify
         (test.signature, publicKey, test.data, strlen(test.data), hash);
     elapsed = micros() - start;
-    std::cout << elapsed;
-    std::cout << " us ... ";
+    Serial.print(elapsed);
+    Serial.print(" us ... ");
 
     if (verified)
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     else
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
 
-    std::cout << test.name;
-    std::cout << " Derive Public Key ... ";
+    Serial.print(test.name);
+    Serial.print(" Derive Public Key ... ");
     Serial.flush();
 
     memcpy_P(privateKey, testKeyP521.privateKey, 66);
@@ -476,14 +469,14 @@ void testSignCommon(const struct TestSignVector *_test, Hash *hash)
     start = micros();
     P521::derivePublicKey(publicKey, privateKey);
     elapsed = micros() - start;
-    std::cout << elapsed;
-    std::cout << " us ... ";
+    Serial.print(elapsed);
+    Serial.print(" us ... ");
 
     ok = !P521_memcmp_P(publicKey, testKeyP521.publicKey, 132);
     if (ok) {
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", publicKey, 132);
         memcpy_P(publicKey, testKeyP521.publicKey, 132);
         printNumber("expected", publicKey, 132);
@@ -504,7 +497,7 @@ void testSignSHA512(const struct TestSignVector *test)
 
 void testSign()
 {
-    std::cout << "Digital signatures:" << std::endl;
+    Serial.println("Digital signatures:");
     testSignSHA256(&testVectorP521_1);
     testSignSHA512(&testVectorP521_2);
     testSignSHA256(&testVectorP521_3);
@@ -513,7 +506,7 @@ void testSign()
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
     // Start the random number generator.  We don't initialise a noise
     // source here because we don't need one for testing purposes.
@@ -522,13 +515,12 @@ void setup()
 
     // Perform the tests.
     testEval();
-    std::cout << std::endl;
+    Serial.println();
     testDH();
-    std::cout << std::endl;
+    Serial.println();
     testSign();
-    std::cout << std::endl;
+    Serial.println();
 }
-
 
 void loop()
 {

@@ -25,15 +25,8 @@ This example runs tests on the GHASH implementation to verify correct behaviour.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <GHASH.h>
@@ -141,8 +134,8 @@ void testGHASH(GHASH *hash, const struct TestVector *test)
 {
     bool ok;
 
-    std::cout << test->name;
-    std::cout << " ... ";
+    Serial.print(test->name);
+    Serial.print(" ... ");
 
     ok  = testGHASH_N(hash, test, test->dataLen);
     ok &= testGHASH_N(hash, test, 1);
@@ -156,9 +149,9 @@ void testGHASH(GHASH *hash, const struct TestVector *test)
     ok &= testGHASH_N(hash, test, 64);
 
     if (ok)
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 }
 
 void perfGHASH(GHASH *hash)
@@ -167,7 +160,7 @@ void perfGHASH(GHASH *hash)
     unsigned long elapsed;
     int count;
 
-    std::cout << "Hashing ... ";
+    Serial.print("Hashing ... ");
 
     for (size_t posn = 0; posn < sizeof(buffer); ++posn)
         buffer[posn] = (uint8_t)posn;
@@ -179,10 +172,10 @@ void perfGHASH(GHASH *hash)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (sizeof(buffer) * 200.0);
-    std::cout << "us per byte, ";
-    std::cout << (sizeof(buffer) * 200.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (sizeof(buffer) * 200.0));
+    Serial.print("us per byte, ");
+    Serial.print((sizeof(buffer) * 200.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfGHASHSetKey(GHASH *hash)
@@ -191,7 +184,7 @@ void perfGHASHSetKey(GHASH *hash)
     unsigned long elapsed;
     int count;
 
-    std::cout << "Set Key ... ";
+    Serial.print("Set Key ... ");
 
     start = micros();
     for (count = 0; count < 1000; ++count) {
@@ -199,10 +192,10 @@ void perfGHASHSetKey(GHASH *hash)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / 1000.0;
-    std::cout << "us per op, ";
-    std::cout << (1000.0 * 1000000.0) / elapsed;
-    std::cout << " ops per second" << std::endl;
+    Serial.print(elapsed / 1000.0);
+    Serial.print("us per op, ");
+    Serial.print((1000.0 * 1000000.0) / elapsed);
+    Serial.println(" ops per second");
 }
 
 void perfGHASHFinalize(GHASH *hash)
@@ -211,7 +204,7 @@ void perfGHASHFinalize(GHASH *hash)
     unsigned long elapsed;
     int count;
 
-    std::cout << "Finalize ... ";
+    Serial.print("Finalize ... ");
 
     hash->reset(testVectorGHASH_1.key);
     hash->update("abc", 3);
@@ -221,36 +214,35 @@ void perfGHASHFinalize(GHASH *hash)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / 1000.0;
-    std::cout << "us per op, ";
-    std::cout << (1000.0 * 1000000.0) / elapsed;
-    std::cout << " ops per second" << std::endl;
+    Serial.print(elapsed / 1000.0);
+    Serial.print("us per op, ");
+    Serial.print((1000.0 * 1000000.0) / elapsed);
+    Serial.println(" ops per second");
 }
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "State Size ... ";
-    std::cout << sizeof(GHASH) << std::endl;
-    std::cout << std::endl;
+    Serial.print("State Size ... ");
+    Serial.println(sizeof(GHASH));
+    Serial.println();
 
-    std::cout << "Test Vectors:" << std::endl;
+    Serial.println("Test Vectors:");
     testGHASH(&ghash, &testVectorGHASH_1);
     testGHASH(&ghash, &testVectorGHASH_2);
     testGHASH(&ghash, &testVectorGHASH_3);
     testGHASH(&ghash, &testVectorGHASH_4);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "Performance Tests:" << std::endl;
+    Serial.println("Performance Tests:");
     perfGHASH(&ghash);
     perfGHASHSetKey(&ghash);
     perfGHASHFinalize(&ghash);
 }
-
 
 void loop()
 {

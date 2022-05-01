@@ -25,15 +25,8 @@ This example runs tests on the utility functions in BigNumberUtil.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <BigNumberUtil.h>
@@ -122,16 +115,16 @@ int compare(const limb_t *x, size_t xsize, const char *y)
 void printNumber(const char *name, const limb_t *x, size_t xsize)
 {
     static const char hexchars[] = "0123456789ABCDEF";
-    std::cout << name;
-    std::cout << " = ";
+    Serial.print(name);
+    Serial.print(" = ");
     for (size_t posn = 0; posn < xsize; ++posn) {
         for (uint8_t bit = LIMB_BITS; bit > 0; ) {
             bit -= 4;
-            std::cout << hexchars[(x[xsize - 1 - posn] >> bit) & 0x0F];
+            Serial.print(hexchars[(x[xsize - 1 - posn] >> bit) & 0x0F]);
         }
-        std::cout << ' ';
+        Serial.print(' ');
     }
-    std::cout << std::endl;
+    Serial.println();
 }
 
 // Standard numbers that are useful in big number tests.
@@ -183,7 +176,7 @@ void printProgMem(const char *str)
 {
     uint8_t ch;
     while ((ch = pgm_read_byte((uint8_t *)str)) != '\0') {
-        std::cout << (char)ch;
+        Serial.print((char)ch);
         ++str;
     }
 }
@@ -266,9 +259,9 @@ void testPackUnpack(void)
 
     foreach_number(x) {
         // What number are we on?
-        std::cout << "pack ";
+        Serial.print("pack ");
         printProgMem(x);
-        std::cout << ": ";
+        Serial.print(": ");
         Serial.flush();
         bool ok = true;
 
@@ -371,19 +364,18 @@ void testPackUnpack(void)
 
         // Report the results.
         if (ok)
-            std::cout << "ok" << std::endl;
+            Serial.println("ok");
         else
-            std::cout << "failed" << std::endl;
+            Serial.println("failed");
     }
 }
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
     testPackUnpack();
 }
-
 
 void loop()
 {

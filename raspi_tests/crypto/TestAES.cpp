@@ -25,15 +25,8 @@ This example runs tests on the AES implementation to verify correct behaviour.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <AES.h>
@@ -88,22 +81,22 @@ byte buffer[16];
 void testCipher(BlockCipher *cipher, const struct TestVector *test)
 {
     crypto_feed_watchdog();
-    std::cout << test->name;
-    std::cout << " Encryption ... ";
+    Serial.print(test->name);
+    Serial.print(" Encryption ... ");
     cipher->setKey(test->key, cipher->keySize());
     cipher->encryptBlock(buffer, test->plaintext);
     if (memcmp(buffer, test->ciphertext, 16) == 0)
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 
-    std::cout << test->name;
-    std::cout << " Decryption ... ";
+    Serial.print(test->name);
+    Serial.print(" Decryption ... ");
     cipher->decryptBlock(buffer, test->ciphertext);
     if (memcmp(buffer, test->plaintext, 16) == 0)
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 }
 
 void perfCipher(BlockCipher *cipher, const struct TestVector *test)
@@ -114,73 +107,72 @@ void perfCipher(BlockCipher *cipher, const struct TestVector *test)
 
     crypto_feed_watchdog();
 
-    std::cout << test->name;
-    std::cout << " Set Key ... ";
+    Serial.print(test->name);
+    Serial.print(" Set Key ... ");
     start = micros();
     for (count = 0; count < 10000; ++count) {
         cipher->setKey(test->key, cipher->keySize());
     }
     elapsed = micros() - start;
-    std::cout << elapsed / 10000.0;
-    std::cout << "us per operation, ";
-    std::cout << (10000.0 * 1000000.0) / elapsed;
-    std::cout << " per second" << std::endl;
+    Serial.print(elapsed / 10000.0);
+    Serial.print("us per operation, ");
+    Serial.print((10000.0 * 1000000.0) / elapsed);
+    Serial.println(" per second");
 
-    std::cout << test->name;
-    std::cout << " Encrypt ... ";
+    Serial.print(test->name);
+    Serial.print(" Encrypt ... ");
     start = micros();
     for (count = 0; count < 5000; ++count) {
         cipher->encryptBlock(buffer, buffer);
     }
     elapsed = micros() - start;
-    std::cout << elapsed / (5000.0 * 16.0);
-    std::cout << "us per byte, ";
-    std::cout << (16.0 * 5000.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (5000.0 * 16.0));
+    Serial.print("us per byte, ");
+    Serial.print((16.0 * 5000.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 
-    std::cout << test->name;
-    std::cout << " Decrypt ... ";
+    Serial.print(test->name);
+    Serial.print(" Decrypt ... ");
     start = micros();
     for (count = 0; count < 5000; ++count) {
         cipher->decryptBlock(buffer, buffer);
     }
     elapsed = micros() - start;
-    std::cout << elapsed / (5000.0 * 16.0);
-    std::cout << "us per byte, ";
-    std::cout << (16.0 * 5000.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (5000.0 * 16.0));
+    Serial.print("us per byte, ");
+    Serial.print((16.0 * 5000.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 
-    std::cout << std::endl;
+    Serial.println();
 }
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "State Sizes:" << std::endl;
-    std::cout << "AES128 ... ";
-    std::cout << sizeof(AES128) << std::endl;
-    std::cout << "AES192 ... ";
-    std::cout << sizeof(AES192) << std::endl;
-    std::cout << "AES256 ... ";
-    std::cout << sizeof(AES256) << std::endl;
-    std::cout << std::endl;
+    Serial.println("State Sizes:");
+    Serial.print("AES128 ... ");
+    Serial.println(sizeof(AES128));
+    Serial.print("AES192 ... ");
+    Serial.println(sizeof(AES192));
+    Serial.print("AES256 ... ");
+    Serial.println(sizeof(AES256));
+    Serial.println();
 
-    std::cout << "Test Vectors:" << std::endl;
+    Serial.println("Test Vectors:");
     testCipher(&aes128, &testVectorAES128);
     testCipher(&aes192, &testVectorAES192);
     testCipher(&aes256, &testVectorAES256);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "Performance Tests:" << std::endl;
+    Serial.println("Performance Tests:");
     perfCipher(&aes128, &testVectorAES128);
     perfCipher(&aes192, &testVectorAES192);
     perfCipher(&aes256, &testVectorAES256);
 }
-
 
 void loop()
 {

@@ -25,15 +25,8 @@ This example runs tests on the Curve25519 algorithm.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <Curve25519.h>
@@ -43,13 +36,13 @@ unsigned long micros()
 void printNumber(const char *name, const uint8_t *x)
 {
     static const char hexchars[] = "0123456789ABCDEF";
-    std::cout << name;
-    std::cout << " = ";
+    Serial.print(name);
+    Serial.print(" = ");
     for (uint8_t posn = 0; posn < 32; ++posn) {
-        std::cout << hexchars[(x[posn] >> 4) & 0x0F];
-        std::cout << hexchars[x[posn] & 0x0F];
+        Serial.print(hexchars[(x[posn] >> 4) & 0x0F]);
+        Serial.print(hexchars[x[posn] & 0x0F]);
     }
-    std::cout << std::endl;
+    Serial.println();
 }
 
 // Check the eval() function using the test vectors from
@@ -95,69 +88,69 @@ void testEval()
 
     // Evaluate the curve function and check the public keys.
     uint8_t result[32];
-    std::cout << "Fixed test vectors:" << std::endl;
-    std::cout << "Computing Alice's public key ... ";
+    Serial.println("Fixed test vectors:");
+    Serial.print("Computing Alice's public key ... ");
     Serial.flush();
     unsigned long start = micros();
     Curve25519::eval(result, alice_private, 0);
     unsigned long elapsed = micros() - start;
     if (memcmp(result, alice_public, 32) == 0) {
-        std::cout << "ok";
+        Serial.print("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", result);
         printNumber("expected", alice_public);
     }
-    std::cout << " (elapsed ";
-    std::cout << elapsed;
-    std::cout << " us)" << std::endl;
-    std::cout << "Computing Bob's public key ... ";
+    Serial.print(" (elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us)");
+    Serial.print("Computing Bob's public key ... ");
     Serial.flush();
     start = micros();
     Curve25519::eval(result, bob_private, 0);
     elapsed = micros() - start;
     if (memcmp(result, bob_public, 32) == 0) {
-        std::cout << "ok";
+        Serial.print("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", result);
         printNumber("expected", bob_public);
     }
-    std::cout << " (elapsed ";
-    std::cout << elapsed;
-    std::cout << " us)" << std::endl;
+    Serial.print(" (elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us)");
 
     // Compute the shared secret from each side.
-    std::cout << "Computing Alice's shared secret ... ";
+    Serial.print("Computing Alice's shared secret ... ");
     Serial.flush();
     start = micros();
     Curve25519::eval(result, alice_private, bob_public);
     elapsed = micros() - start;
     if (memcmp(result, shared_secret, 32) == 0) {
-        std::cout << "ok";
+        Serial.print("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", result);
         printNumber("expected", shared_secret);
     }
-    std::cout << " (elapsed ";
-    std::cout << elapsed;
-    std::cout << " us)" << std::endl;
-    std::cout << "Computing Bob's shared secret ... ";
+    Serial.print(" (elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us)");
+    Serial.print("Computing Bob's shared secret ... ");
     Serial.flush();
     start = micros();
     Curve25519::eval(result, bob_private, alice_public);
     elapsed = micros() - start;
     if (memcmp(result, shared_secret, 32) == 0) {
-        std::cout << "ok";
+        Serial.print("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", result);
         printNumber("expected", shared_secret);
     }
-    std::cout << " (elapsed ";
-    std::cout << elapsed;
-    std::cout << " us)" << std::endl;
+    Serial.print(" (elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us)");
 }
 
 void testDH()
@@ -167,53 +160,53 @@ void testDH()
     static uint8_t bob_k[32];
     static uint8_t bob_f[32];
 
-    std::cout << "Diffie-Hellman key exchange:" << std::endl;
-    std::cout << "Generate random k/f for Alice ... ";
+    Serial.println("Diffie-Hellman key exchange:");
+    Serial.print("Generate random k/f for Alice ... ");
     Serial.flush();
     unsigned long start = micros();
     Curve25519::dh1(alice_k, alice_f);
     unsigned long elapsed = micros() - start;
-    std::cout << "elapsed ";
-    std::cout << elapsed;
-    std::cout << " us" << std::endl;
+    Serial.print("elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us");
 
-    std::cout << "Generate random k/f for Bob ... ";
+    Serial.print("Generate random k/f for Bob ... ");
     Serial.flush();
     start = micros();
     Curve25519::dh1(bob_k, bob_f);
     elapsed = micros() - start;
-    std::cout << "elapsed ";
-    std::cout << elapsed;
-    std::cout << " us" << std::endl;
+    Serial.print("elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us");
 
-    std::cout << "Generate shared secret for Alice ... ";
+    Serial.print("Generate shared secret for Alice ... ");
     Serial.flush();
     start = micros();
     Curve25519::dh2(bob_k, alice_f);
     elapsed = micros() - start;
-    std::cout << "elapsed ";
-    std::cout << elapsed;
-    std::cout << " us" << std::endl;
+    Serial.print("elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us");
 
-    std::cout << "Generate shared secret for Bob ... ";
+    Serial.print("Generate shared secret for Bob ... ");
     Serial.flush();
     start = micros();
     Curve25519::dh2(alice_k, bob_f);
     elapsed = micros() - start;
-    std::cout << "elapsed ";
-    std::cout << elapsed;
-    std::cout << " us" << std::endl;
+    Serial.print("elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us");
 
-    std::cout << "Check that the shared secrets match ... ";
+    Serial.print("Check that the shared secrets match ... ");
     if (memcmp(alice_k, bob_k, 32) == 0)
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     else
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
 }
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
     // Start the random number generator.  We don't initialise a noise
     // source here because we don't need one for testing purposes.
@@ -222,11 +215,10 @@ void setup()
 
     // Perform the tests.
     testEval();
-    std::cout << std::endl;
+    Serial.println();
     testDH();
-    std::cout << std::endl;
+    Serial.println();
 }
-
 
 void loop()
 {

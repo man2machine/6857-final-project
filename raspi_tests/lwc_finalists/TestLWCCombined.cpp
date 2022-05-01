@@ -29,15 +29,8 @@ of flash memory.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include "aead-metadata.h"
 #include "internal-blake2s.h"
@@ -103,9 +96,9 @@ static unsigned long hash_16_ref = 0;
 static void print_x(double value)
 {
     if (value < 0.005)
-        std::cout << value, 4;
+        Serial.print(value, 4);
     else
-        std::cout << value;
+        Serial.print(value);
 }
 
 void perfCipherEncrypt128(const aead_cipher_t *cipher)
@@ -118,7 +111,7 @@ void perfCipherEncrypt128(const aead_cipher_t *cipher)
     for (count = 0; count < MAX_DATA_SIZE; ++count)
         plaintext[count] = (unsigned char)count;
 
-    std::cout << "   encrypt 128 byte packets ... ";
+    Serial.print("   encrypt 128 byte packets ... ");
 
     start = micros();
     for (count = 0; count < PERF_LOOPS; ++count) {
@@ -130,13 +123,13 @@ void perfCipherEncrypt128(const aead_cipher_t *cipher)
 
     if (encrypt_128_ref != 0 && elapsed != 0) {
         print_x(((double)encrypt_128_ref) / elapsed);
-        std::cout << "x, ";
+        Serial.print("x, ");
     }
 
-    std::cout << elapsed / (128.0 * PERF_LOOPS);
-    std::cout << "us per byte, ";
-    std::cout << (128.0 * PERF_LOOPS * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (128.0 * PERF_LOOPS));
+    Serial.print("us per byte, ");
+    Serial.print((128.0 * PERF_LOOPS * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfCipherDecrypt128(const aead_cipher_t *cipher)
@@ -151,7 +144,7 @@ void perfCipherDecrypt128(const aead_cipher_t *cipher)
         plaintext[count] = (unsigned char)count;
     cipher->encrypt(ciphertext, &clen, plaintext, 128, 0, 0, nonce, key);
 
-    std::cout << "   decrypt 128 byte packets ... ";
+    Serial.print("   decrypt 128 byte packets ... ");
 
     start = micros();
     for (count = 0; count < PERF_LOOPS; ++count) {
@@ -163,13 +156,13 @@ void perfCipherDecrypt128(const aead_cipher_t *cipher)
 
     if (decrypt_128_ref != 0 && elapsed != 0) {
         print_x(((double)decrypt_128_ref) / elapsed);
-        std::cout << "x, ";
+        Serial.print("x, ");
     }
 
-    std::cout << elapsed / (128.0 * PERF_LOOPS);
-    std::cout << "us per byte, ";
-    std::cout << (128.0 * PERF_LOOPS * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (128.0 * PERF_LOOPS));
+    Serial.print("us per byte, ");
+    Serial.print((128.0 * PERF_LOOPS * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfCipherEncrypt16(const aead_cipher_t *cipher)
@@ -182,7 +175,7 @@ void perfCipherEncrypt16(const aead_cipher_t *cipher)
     for (count = 0; count < MAX_DATA_SIZE; ++count)
         plaintext[count] = (unsigned char)count;
 
-    std::cout << "   encrypt  16 byte packets ... ";
+    Serial.print("   encrypt  16 byte packets ... ");
 
     start = micros();
     for (count = 0; count < PERF_LOOPS_16; ++count) {
@@ -194,13 +187,13 @@ void perfCipherEncrypt16(const aead_cipher_t *cipher)
 
     if (encrypt_16_ref != 0 && elapsed != 0) {
         print_x(((double)encrypt_16_ref) / elapsed);
-        std::cout << "x, ";
+        Serial.print("x, ");
     }
 
-    std::cout << elapsed / (16.0 * PERF_LOOPS_16);
-    std::cout << "us per byte, ";
-    std::cout << (16.0 * PERF_LOOPS_16 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (16.0 * PERF_LOOPS_16));
+    Serial.print("us per byte, ");
+    Serial.print((16.0 * PERF_LOOPS_16 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfCipherDecrypt16(const aead_cipher_t *cipher)
@@ -215,7 +208,7 @@ void perfCipherDecrypt16(const aead_cipher_t *cipher)
         plaintext[count] = (unsigned char)count;
     cipher->encrypt(ciphertext, &clen, plaintext, 16, 0, 0, nonce, key);
 
-    std::cout << "   decrypt  16 byte packets ... ";
+    Serial.print("   decrypt  16 byte packets ... ");
 
     start = micros();
     for (count = 0; count < PERF_LOOPS_16; ++count) {
@@ -227,13 +220,13 @@ void perfCipherDecrypt16(const aead_cipher_t *cipher)
 
     if (decrypt_16_ref != 0 && elapsed != 0) {
         print_x(((double)decrypt_16_ref) / elapsed);
-        std::cout << "x, ";
+        Serial.print("x, ");
     }
 
-    std::cout << elapsed / (16.0 * PERF_LOOPS_16);
-    std::cout << "us per byte, ";
-    std::cout << (16.0 * PERF_LOOPS_16 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (16.0 * PERF_LOOPS_16));
+    Serial.print("us per byte, ");
+    Serial.print((16.0 * PERF_LOOPS_16 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 bool equal_hex(const char *expected, const unsigned char *actual, unsigned len)
@@ -273,7 +266,7 @@ void perfCipherSanityCheck(const aead_cipher_t *cipher, const char *sanity_vec)
     unsigned count;
     size_t clen;
 
-    std::cout << "   sanity check ... ";
+    Serial.print("   sanity check ... ");
 
     for (count = 0; count < 23; ++count)
         plaintext[count] = (unsigned char)count;
@@ -284,17 +277,17 @@ void perfCipherSanityCheck(const aead_cipher_t *cipher, const char *sanity_vec)
         (ciphertext, &clen, plaintext, 23, plaintext + 32, 11, nonce, key);
 
     if (equal_hex(sanity_vec, ciphertext, clen))
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     else
-        std::cout << "FAILED" << std::endl;
+        Serial.println("FAILED");
 }
 
 void perfCipher(const aead_cipher_t *cipher, const char *sanity_vec)
 {
     crypto_feed_watchdog();
-    std::cout << cipher->name;
-    std::cout << ':';
-    std::cout << std::endl;
+    Serial.print(cipher->name);
+    Serial.print(':');
+    Serial.println();
 
     if (sanity_vec)
         perfCipherSanityCheck(cipher, sanity_vec);
@@ -309,18 +302,18 @@ void perfCipher(const aead_cipher_t *cipher, const char *sanity_vec)
                                 encrypt_16_ref  + decrypt_16_ref;
         unsigned long time_avg = encrypt_128_time + decrypt_128_time +
                                  encrypt_16_time  + decrypt_16_time;
-        std::cout << "   average ... ";
+        Serial.print("   average ... ");
         print_x(((double)ref_avg) / time_avg);
-        std::cout << "x";
+        Serial.print("x");
         if (PERF_MASKING) {
-            std::cout << " = 1 / ";
+            Serial.print(" = 1 / ");
             print_x(((double)time_avg) / ref_avg);
-            std::cout << "x";
+            Serial.print("x");
         }
-        std::cout << std::endl;
+        Serial.println();
     }
 
-    std::cout << std::endl;
+    Serial.println();
 }
 
 static unsigned char hash_buffer[1024];
@@ -335,15 +328,15 @@ unsigned long perfHash_N
     for (count = 0; count < size; ++count)
         hash_buffer[count] = (unsigned char)count;
 
-    std::cout << "   hash ";
+    Serial.print("   hash ");
     if (size < 1000) {
         if (size < 100)
-            std::cout << "  ";
+            Serial.print("  ");
         else
-            std::cout << " ";
+            Serial.print(" ");
     }
-    std::cout << size;
-    std::cout << " bytes ... ";
+    Serial.print(size);
+    Serial.print(" bytes ... ");
 
     // Adjust the number of loops to do more loops on smaller sizes.
     if (size < 1024)
@@ -359,13 +352,13 @@ unsigned long perfHash_N
 
     if (ref != 0 && elapsed != 0) {
         print_x(((double)ref) / elapsed);
-        std::cout << "x, ";
+        Serial.print("x, ");
     }
 
-    std::cout << elapsed / (((double)size) * loops);
-    std::cout << "us per byte, ";
-    std::cout << (1000000.0 * size * loops) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (((double)size) * loops));
+    Serial.print("us per byte, ");
+    Serial.print((1000000.0 * size * loops) / elapsed);
+    Serial.println(" bytes per second");
 
     return elapsed;
 }
@@ -375,7 +368,7 @@ void perfHashSanityCheck
 {
     unsigned count;
 
-    std::cout << "   sanity check ... ";
+    Serial.print("   sanity check ... ");
 
     for (count = 0; count < 23; ++count)
         plaintext[count] = (unsigned char)count;
@@ -383,17 +376,17 @@ void perfHashSanityCheck
     hash_alg->hash(ciphertext, plaintext, 23);
 
     if (equal_hex(sanity_vec, ciphertext, hash_alg->hash_len))
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     else
-        std::cout << "FAILED" << std::endl;
+        Serial.println("FAILED");
 }
 
 void perfHash(const aead_hash_algorithm_t *hash_alg, const char *sanity_vec)
 {
     crypto_feed_watchdog();
-    std::cout << hash_alg->name;
-    std::cout << ':';
-    std::cout << std::endl;
+    Serial.print(hash_alg->name);
+    Serial.print(':');
+    Serial.println();
 
     if (sanity_vec)
         perfHashSanityCheck(hash_alg, sanity_vec);
@@ -407,13 +400,13 @@ void perfHash(const aead_hash_algorithm_t *hash_alg, const char *sanity_vec)
         avg += ((double)hash_128_ref) / hash_128_time;
         avg += ((double)hash_16_ref) / hash_16_time;
         avg /= 3.0;
-        std::cout << "   average ... ";
+        Serial.print("   average ... ");
         print_x(avg);
-        std::cout << "x";
-        std::cout << std::endl;
+        Serial.print("x");
+        Serial.println();
     }
 
-    std::cout << std::endl;
+    Serial.println();
 }
 
 void perfMasked(const aead_cipher_t *ref_cipher,
@@ -428,16 +421,16 @@ void perfMasked(const aead_cipher_t *ref_cipher,
     decrypt_128_ref = decrypt_128_time;
     encrypt_16_ref = encrypt_16_time;
     decrypt_16_ref = decrypt_16_time;
-    std::cout << "[";
-    std::cout << AEAD_MASKING_SHARES;
-    std::cout << "] ";
+    Serial.print("[");
+    Serial.print(AEAD_MASKING_SHARES);
+    Serial.print("] ");
     perfCipher(masked_cipher, 0);
 }
 
 void setup()
 {
-    
-    std::cout << std::endl;
+    Serial.begin(9600);
+    Serial.println();
     // Test ChaChaPoly and BLAKE2s first to get the reference time
     // for other algorithms.
     perfCipher(&internal_chachapoly_cipher, 0);
@@ -535,7 +528,6 @@ void setup()
     perfMasked(&tiny_jambu_256_cipher, &tiny_jambu_256_masked_cipher);
     perfMasked(&xoodyak_cipher, &xoodyak_masked_cipher);
 }
-
 
 void loop()
 {

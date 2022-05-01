@@ -25,15 +25,8 @@ This example runs tests on the Speck implementation to verify correct behaviour.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <Speck.h>
@@ -91,25 +84,25 @@ void testCipher(BlockCipher *cipher, const struct TestVector *test, size_t keySi
 {
     crypto_feed_watchdog();
 
-    std::cout << test->name;
-    std::cout << " Encryption ... ";
+    Serial.print(test->name);
+    Serial.print(" Encryption ... ");
     cipher->setKey(test->key, keySize);
     cipher->encryptBlock(buffer, test->plaintext);
     if (memcmp(buffer, test->ciphertext, 16) == 0)
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 
     if (!decryption)
         return;
 
-    std::cout << test->name;
-    std::cout << " Decryption ... ";
+    Serial.print(test->name);
+    Serial.print(" Decryption ... ");
     cipher->decryptBlock(buffer, test->ciphertext);
     if (memcmp(buffer, test->plaintext, 16) == 0)
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 }
 
 void perfCipher(BlockCipher *cipher, const struct TestVector *test, size_t keySize, bool decryption = true)
@@ -120,102 +113,101 @@ void perfCipher(BlockCipher *cipher, const struct TestVector *test, size_t keySi
 
     crypto_feed_watchdog();
 
-    std::cout << test->name;
-    std::cout << " Set Key ... ";
+    Serial.print(test->name);
+    Serial.print(" Set Key ... ");
     start = micros();
     for (count = 0; count < 10000; ++count) {
         cipher->setKey(test->key, keySize);
     }
     elapsed = micros() - start;
-    std::cout << elapsed / 10000.0;
-    std::cout << "us per operation, ";
-    std::cout << (10000.0 * 1000000.0) / elapsed;
-    std::cout << " per second" << std::endl;
+    Serial.print(elapsed / 10000.0);
+    Serial.print("us per operation, ");
+    Serial.print((10000.0 * 1000000.0) / elapsed);
+    Serial.println(" per second");
 
-    std::cout << test->name;
-    std::cout << " Encrypt ... ";
+    Serial.print(test->name);
+    Serial.print(" Encrypt ... ");
     start = micros();
     for (count = 0; count < 5000; ++count) {
         cipher->encryptBlock(buffer, buffer);
     }
     elapsed = micros() - start;
-    std::cout << elapsed / (5000.0 * 16.0);
-    std::cout << "us per byte, ";
-    std::cout << (16.0 * 5000.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (5000.0 * 16.0));
+    Serial.print("us per byte, ");
+    Serial.print((16.0 * 5000.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 
     if (!decryption) {
-        std::cout << std::endl;
+        Serial.println();
         return;
     }
 
-    std::cout << test->name;
-    std::cout << " Decrypt ... ";
+    Serial.print(test->name);
+    Serial.print(" Decrypt ... ");
     start = micros();
     for (count = 0; count < 5000; ++count) {
         cipher->decryptBlock(buffer, buffer);
     }
     elapsed = micros() - start;
-    std::cout << elapsed / (5000.0 * 16.0);
-    std::cout << "us per byte, ";
-    std::cout << (16.0 * 5000.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (5000.0 * 16.0));
+    Serial.print("us per byte, ");
+    Serial.print((16.0 * 5000.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 
-    std::cout << std::endl;
+    Serial.println();
 }
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "State Sizes:" << std::endl;
-    std::cout << "Speck ... ";
-    std::cout << sizeof(Speck) << std::endl;
-    std::cout << "SpeckSmall ... ";
-    std::cout << sizeof(SpeckSmall) << std::endl;
-    std::cout << "SpeckTiny ... ";
-    std::cout << sizeof(SpeckTiny) << std::endl;
-    std::cout << std::endl;
+    Serial.println("State Sizes:");
+    Serial.print("Speck ... ");
+    Serial.println(sizeof(Speck));
+    Serial.print("SpeckSmall ... ");
+    Serial.println(sizeof(SpeckSmall));
+    Serial.print("SpeckTiny ... ");
+    Serial.println(sizeof(SpeckTiny));
+    Serial.println();
 
-    std::cout << "Speck Test Vectors:" << std::endl;
+    Serial.println("Speck Test Vectors:");
     testCipher(&speck, &testVectorSpeck128, 16);
     testCipher(&speck, &testVectorSpeck192, 24);
     testCipher(&speck, &testVectorSpeck256, 32);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "SpeckSmall Test Vectors:" << std::endl;
+    Serial.println("SpeckSmall Test Vectors:");
     testCipher(&speckSmall, &testVectorSpeck128, 16);
     testCipher(&speckSmall, &testVectorSpeck192, 24);
     testCipher(&speckSmall, &testVectorSpeck256, 32);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "SpeckTiny Test Vectors:" << std::endl;
+    Serial.println("SpeckTiny Test Vectors:");
     testCipher(&speckTiny, &testVectorSpeck128, 16, false);
     testCipher(&speckTiny, &testVectorSpeck192, 24, false);
     testCipher(&speckTiny, &testVectorSpeck256, 32, false);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "Speck Performance Tests:" << std::endl;
+    Serial.println("Speck Performance Tests:");
     perfCipher(&speck, &testVectorSpeck128, 16);
     perfCipher(&speck, &testVectorSpeck192, 24);
     perfCipher(&speck, &testVectorSpeck256, 32);
 
-    std::cout << "SpeckSmall Performance Tests:" << std::endl;
+    Serial.println("SpeckSmall Performance Tests:");
     perfCipher(&speckSmall, &testVectorSpeck128, 16);
     perfCipher(&speckSmall, &testVectorSpeck192, 24);
     perfCipher(&speckSmall, &testVectorSpeck256, 32);
 
-    std::cout << "SpeckTiny Performance Tests:" << std::endl;
+    Serial.println("SpeckTiny Performance Tests:");
     perfCipher(&speckTiny, &testVectorSpeck128, 16, false);
     perfCipher(&speckTiny, &testVectorSpeck192, 24, false);
     perfCipher(&speckTiny, &testVectorSpeck256, 32, false);
 }
-
 
 void loop()
 {

@@ -26,15 +26,8 @@ correct behaviour.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <CryptoLW.h>
@@ -158,11 +151,11 @@ bool testCipher_N(Ascon128 *cipher, const struct TestVector *test, size_t inc)
 
     cipher->clear();
     if (!cipher->setKey(test->key, 16)) {
-        std::cout << "setKey ";
+        Serial.print("setKey ");
         return false;
     }
     if (!cipher->setIV(test->iv, 16)) {
-        std::cout << "setIV ";
+        Serial.print("setIV ");
         return false;
     }
 
@@ -183,15 +176,15 @@ bool testCipher_N(Ascon128 *cipher, const struct TestVector *test, size_t inc)
     }
 
     if (memcmp(buffer, test->ciphertext, test->datasize) != 0) {
-        std::cout << buffer[0], HEX;
-        std::cout << "->";
-        std::cout << test->ciphertext[0], HEX;
+        Serial.print(buffer[0], HEX);
+        Serial.print("->");
+        Serial.print(test->ciphertext[0], HEX);
         return false;
     }
 
     cipher->computeTag(tag, sizeof(tag));
     if (memcmp(tag, test->tag, sizeof(tag)) != 0) {
-        std::cout << "computed wrong tag ... ";
+        Serial.print("computed wrong tag ... ");
         return false;
     }
 
@@ -216,7 +209,7 @@ bool testCipher_N(Ascon128 *cipher, const struct TestVector *test, size_t inc)
         return false;
 
     if (!cipher->checkTag(tag, sizeof(tag))) {
-        std::cout << "tag did not check ... ";
+        Serial.print("tag did not check ... ");
         return false;
     }
 
@@ -230,8 +223,8 @@ void testCipher(Ascon128 *cipher, const struct TestVector *test)
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << test->name;
-    std::cout << " ... ";
+    Serial.print(test->name);
+    Serial.print(" ... ");
 
     ok  = testCipher_N(cipher, test, test->datasize);
     ok &= testCipher_N(cipher, test, 1);
@@ -242,9 +235,9 @@ void testCipher(Ascon128 *cipher, const struct TestVector *test)
     ok &= testCipher_N(cipher, test, 16);
 
     if (ok)
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 }
 
 void perfCipherSetKey(Ascon128 *cipher, const struct TestVector *test)
@@ -256,8 +249,8 @@ void perfCipherSetKey(Ascon128 *cipher, const struct TestVector *test)
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << test->name;
-    std::cout << " SetKey ... ";
+    Serial.print(test->name);
+    Serial.print(" SetKey ... ");
 
     start = micros();
     for (count = 0; count < 1000; ++count) {
@@ -266,10 +259,10 @@ void perfCipherSetKey(Ascon128 *cipher, const struct TestVector *test)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / 1000.0;
-    std::cout << "us per operation, ";
-    std::cout << (1000.0 * 1000000.0) / elapsed;
-    std::cout << " per second" << std::endl;
+    Serial.print(elapsed / 1000.0);
+    Serial.print("us per operation, ");
+    Serial.print((1000.0 * 1000000.0) / elapsed);
+    Serial.println(" per second");
 }
 
 void perfCipherEncrypt(Ascon128 *cipher, const struct TestVector *test)
@@ -281,8 +274,8 @@ void perfCipherEncrypt(Ascon128 *cipher, const struct TestVector *test)
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << test->name;
-    std::cout << " Encrypt ... ";
+    Serial.print(test->name);
+    Serial.print(" Encrypt ... ");
 
     cipher->setKey(test->key, 16);
     cipher->setIV(test->iv, 16);
@@ -292,10 +285,10 @@ void perfCipherEncrypt(Ascon128 *cipher, const struct TestVector *test)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (128.0 * 500.0);
-    std::cout << "us per byte, ";
-    std::cout << (128.0 * 500.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (128.0 * 500.0));
+    Serial.print("us per byte, ");
+    Serial.print((128.0 * 500.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfCipherDecrypt(Ascon128 *cipher, const struct TestVector *test)
@@ -307,8 +300,8 @@ void perfCipherDecrypt(Ascon128 *cipher, const struct TestVector *test)
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << test->name;
-    std::cout << " Decrypt ... ";
+    Serial.print(test->name);
+    Serial.print(" Decrypt ... ");
 
     cipher->setKey(test->key, 16);
     cipher->setIV(test->iv, 16);
@@ -318,10 +311,10 @@ void perfCipherDecrypt(Ascon128 *cipher, const struct TestVector *test)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (128.0 * 500.0);
-    std::cout << "us per byte, ";
-    std::cout << (128.0 * 500.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (128.0 * 500.0));
+    Serial.print("us per byte, ");
+    Serial.print((128.0 * 500.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfCipherAddAuthData(Ascon128 *cipher, const struct TestVector *test)
@@ -333,8 +326,8 @@ void perfCipherAddAuthData(Ascon128 *cipher, const struct TestVector *test)
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << test->name;
-    std::cout << " AddAuthData ... ";
+    Serial.print(test->name);
+    Serial.print(" AddAuthData ... ");
 
     cipher->setKey(test->key, 16);
     cipher->setIV(test->iv, 16);
@@ -345,10 +338,10 @@ void perfCipherAddAuthData(Ascon128 *cipher, const struct TestVector *test)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (128.0 * 500.0);
-    std::cout << "us per byte, ";
-    std::cout << (128.0 * 500.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (128.0 * 500.0));
+    Serial.print("us per byte, ");
+    Serial.print((128.0 * 500.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfCipherComputeTag(Ascon128 *cipher, const struct TestVector *test)
@@ -360,8 +353,8 @@ void perfCipherComputeTag(Ascon128 *cipher, const struct TestVector *test)
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << test->name;
-    std::cout << " ComputeTag ... ";
+    Serial.print(test->name);
+    Serial.print(" ComputeTag ... ");
 
     cipher->setKey(test->key, 16);
     cipher->setIV(test->iv, 16);
@@ -371,10 +364,10 @@ void perfCipherComputeTag(Ascon128 *cipher, const struct TestVector *test)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / 1000.0;
-    std::cout << "us per operation, ";
-    std::cout << (1000.0 * 1000000.0) / elapsed;
-    std::cout << " per second" << std::endl;
+    Serial.print(elapsed / 1000.0);
+    Serial.print("us per operation, ");
+    Serial.print((1000.0 * 1000000.0) / elapsed);
+    Serial.println(" per second");
 }
 
 void perfCipher(Ascon128 *cipher, const struct TestVector *test)
@@ -388,27 +381,26 @@ void perfCipher(Ascon128 *cipher, const struct TestVector *test)
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "State Size ... ";
-    std::cout << sizeof(Ascon128) << std::endl;
-    std::cout << std::endl;
+    Serial.print("State Size ... ");
+    Serial.println(sizeof(Ascon128));
+    Serial.println();
 
-    std::cout << "Test Vectors:" << std::endl;
+    Serial.println("Test Vectors:");
     testCipher(&acorn, &testVectorAscon128_1);
     testCipher(&acorn, &testVectorAscon128_2);
     testCipher(&acorn, &testVectorAscon128_3);
     testCipher(&acorn, &testVectorAscon128_4);
     testCipher(&acorn, &testVectorAscon128_5);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "Performance Tests:" << std::endl;
+    Serial.println("Performance Tests:");
     perfCipher(&acorn, &testVectorAscon128_4);
 }
-
 
 void loop()
 {

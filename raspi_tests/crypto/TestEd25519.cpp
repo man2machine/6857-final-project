@@ -25,15 +25,8 @@ This example runs tests on the Ed25519 algorithm.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <Ed25519.h>
@@ -101,13 +94,13 @@ static TestVector testVector;
 void printNumber(const char *name, const uint8_t *x, uint8_t len)
 {
     static const char hexchars[] = "0123456789ABCDEF";
-    std::cout << name;
-    std::cout << " = ";
+    Serial.print(name);
+    Serial.print(" = ");
     for (uint8_t posn = 0; posn < len; ++posn) {
-        std::cout << hexchars[(x[posn] >> 4) & 0x0F];
-        std::cout << hexchars[x[posn] & 0x0F];
+        Serial.print(hexchars[(x[posn] >> 4) & 0x0F]);
+        Serial.print(hexchars[x[posn] & 0x0F]);
     }
-    std::cout << std::endl;
+    Serial.println();
 }
 
 void testFixedVectors(const struct TestVector *test)
@@ -118,57 +111,57 @@ void testFixedVectors(const struct TestVector *test)
 
     // Sign using the test vector.
     uint8_t signature[64];
-    std::cout << test->name;
-    std::cout << " sign ... ";
+    Serial.print(test->name);
+    Serial.print(" sign ... ");
     Serial.flush();
     unsigned long start = micros();
     Ed25519::sign(signature, test->privateKey, test->publicKey,
                   test->message, test->len);
     unsigned long elapsed = micros() - start;
     if (memcmp(signature, test->signature, 64) == 0) {
-        std::cout << "ok";
+        Serial.print("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", signature, 64);
         printNumber("expected", test->signature, 64);
     }
-    std::cout << " (elapsed ";
-    std::cout << elapsed;
-    std::cout << " us)" << std::endl;
+    Serial.print(" (elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us)");
 
     // Verify using the test vector.
-    std::cout << test->name;
-    std::cout << " verify ... ";
+    Serial.print(test->name);
+    Serial.print(" verify ... ");
     Serial.flush();
     start = micros();
     bool verified = Ed25519::verify(signature, test->publicKey, test->message, test->len);
     elapsed = micros() - start;
     if (verified) {
-        std::cout << "ok";
+        Serial.print("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
     }
-    std::cout << " (elapsed ";
-    std::cout << elapsed;
-    std::cout << " us)" << std::endl;
+    Serial.print(" (elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us)");
 
     // Check derivation of the public key from the private key.
-    std::cout << test->name;
-    std::cout << " derive public key ... ";
+    Serial.print(test->name);
+    Serial.print(" derive public key ... ");
     Serial.flush();
     start = micros();
     Ed25519::derivePublicKey(signature, test->privateKey);
     elapsed = micros() - start;
     if (memcmp(signature, test->publicKey, 32) == 0) {
-        std::cout << "ok";
+        Serial.print("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", signature, 32);
         printNumber("expected", test->publicKey, 32);
     }
-    std::cout << " (elapsed ";
-    std::cout << elapsed;
-    std::cout << " us)" << std::endl;
+    Serial.print(" (elapsed ");
+    Serial.print(elapsed);
+    Serial.println(" us)");
 }
 
 void testFixedVectors()
@@ -179,7 +172,7 @@ void testFixedVectors()
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
     // Start the random number generator.  We don't initialise a noise
     // source here because we don't need one for testing purposes.
@@ -188,9 +181,8 @@ void setup()
 
     // Perform the tests.
     testFixedVectors();
-    std::cout << std::endl;
+    Serial.println();
 }
-
 
 void loop()
 {

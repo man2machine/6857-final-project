@@ -2,15 +2,8 @@
 // Example of initializing and using the random number generator.
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <RNG.h>
@@ -32,8 +25,8 @@ unsigned long startTime;
 size_t length = 48; // First block should wait for the pool to fill up.
 
 void setup() {
-    
-    std::cout << "start" << std::endl;
+    Serial.begin(9600);
+    Serial.println("start");
 
     // Initialize the random number generator.
     RNG.begin(RNG_APP_TAG);
@@ -48,19 +41,18 @@ void printHex(const byte *data, unsigned len)
 {
     static char const hexchars[] = "0123456789ABCDEF";
     unsigned long time = millis() - startTime;
-    std::cout << time / 1000;
-    std::cout << '.';
-    std::cout << (time / 100) % 10;
-    std::cout << ": ";
+    Serial.print(time / 1000);
+    Serial.print('.');
+    Serial.print((time / 100) % 10);
+    Serial.print(": ");
     while (len > 0) {
         int b = *data++;
-        std::cout << hexchars[(b >> 4) & 0x0F];
-        std::cout << hexchars[b & 0x0F];
+        Serial.print(hexchars[(b >> 4) & 0x0F]);
+        Serial.print(hexchars[b & 0x0F]);
         --len;
     }
-    std::cout << std::endl;
+    Serial.println();
 }
-
 
 void loop()
 {
@@ -70,7 +62,7 @@ void loop()
     if (newCalibrating != calibrating) {
         calibrating = newCalibrating;
         if (calibrating)
-            std::cout << "calibrating" << std::endl;
+            Serial.println("calibrating");
     }
 
     // Perform regular housekeeping on the random number generator.

@@ -25,15 +25,8 @@ This example runs tests on the XTS implementation to verify correct behaviour.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <CryptoLW.h>
@@ -208,13 +201,13 @@ void _printProgMem(const char *str)
     do { \
         static char const temp_str[] PROGMEM = str; \
         _printProgMem(temp_str); \
-        std::cout << std::endl; \
+        Serial.println(); \
     } while (0)
 
 #else
 
 #define printProgMem(str) \
-    std::cout << str)
+    Serial.print(str)
 
 #define printlnProgMem(str) \
     Serial.println(str)
@@ -223,11 +216,11 @@ void _printProgMem(const char *str)
 
 void testXTS(XTSCommon *cipher, const struct TestVector *test)
 {
-    crypto_feed_watchdog(;
+    crypto_feed_watchdog();
 
     memcpy_P(&testVector, test, sizeof(testVector));
 
-    std::cout << testVector.name;
+    Serial.print(testVector.name);
     printProgMem(" Encrypt ... ");
 
     cipher->setSectorSize(testVector.sectorSize);
@@ -240,7 +233,7 @@ void testXTS(XTSCommon *cipher, const struct TestVector *test)
     else
         printlnProgMem("Failed");
 
-    std::cout << testVector.name;
+    Serial.print(testVector.name);
     printProgMem(" Decrypt ... ");
 
     cipher->decryptSector(buffer, testVector.ciphertext);
@@ -250,7 +243,7 @@ void testXTS(XTSCommon *cipher, const struct TestVector *test)
     else
         printlnProgMem("Failed");
 
-    std::cout << testVector.name;
+    Serial.print(testVector.name);
     printProgMem(" Encrypt In-Place ... ");
 
     memcpy(buffer, testVector.plaintext, testVector.sectorSize);
@@ -261,7 +254,7 @@ void testXTS(XTSCommon *cipher, const struct TestVector *test)
     else
         printlnProgMem("Failed");
 
-    std::cout << testVector.name;
+    Serial.print(testVector.name);
     printProgMem(" Decrypt In-Place ... ");
 
     memcpy(buffer, testVector.ciphertext, testVector.sectorSize);
@@ -283,7 +276,7 @@ void perfEncrypt(const char *name, XTSCommon *cipher, const struct TestVector *t
 
     memcpy_P(&testVector, test, sizeof(testVector));
 
-    std::cout << name;
+    Serial.print(name);
     printProgMem(" ... ");
 
     cipher->setSectorSize(sizeof(buffer));
@@ -296,9 +289,9 @@ void perfEncrypt(const char *name, XTSCommon *cipher, const struct TestVector *t
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (sizeof(buffer) * 500.0);
+    Serial.print(elapsed / (sizeof(buffer) * 500.0));
     printProgMem("us per byte, ");
-    std::cout << (sizeof(buffer) * 500.0 * 1000000.0) / elapsed;
+    Serial.print((sizeof(buffer) * 500.0 * 1000000.0) / elapsed);
     printlnProgMem(" bytes per second");
 }
 
@@ -312,7 +305,7 @@ void perfDecrypt(const char *name, XTSCommon *cipher, const struct TestVector *t
 
     memcpy_P(&testVector, test, sizeof(testVector));
 
-    std::cout << name;
+    Serial.print(name);
     printProgMem(" ... ");
 
     cipher->setSectorSize(sizeof(buffer));
@@ -324,9 +317,9 @@ void perfDecrypt(const char *name, XTSCommon *cipher, const struct TestVector *t
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (sizeof(buffer) * 500.0);
+    Serial.print(elapsed / (sizeof(buffer) * 500.0));
     printProgMem("us per byte, ");
-    std::cout << (sizeof(buffer) * 500.0 * 1000000.0) / elapsed;
+    Serial.print((sizeof(buffer) * 500.0 * 1000000.0) / elapsed);
     printlnProgMem(" bytes per second");
 }
 
@@ -340,7 +333,7 @@ void perfSetKey(const char *name, XTSCommon *cipher, const struct TestVector *te
 
     memcpy_P(&testVector, test, sizeof(testVector));
 
-    std::cout << name;
+    Serial.print(name);
     printProgMem(" ... ");
 
     start = micros();
@@ -349,9 +342,9 @@ void perfSetKey(const char *name, XTSCommon *cipher, const struct TestVector *te
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / 2000.0;
+    Serial.print(elapsed / 2000.0);
     printProgMem("us per operation, ");
-    std::cout << (2000.0 * 1000000.0) / elapsed;
+    Serial.print((2000.0 * 1000000.0) / elapsed);
     printlnProgMem(" operations per second");
 }
 
@@ -365,7 +358,7 @@ void perfSetTweak(const char *name, XTSCommon *cipher, const struct TestVector *
 
     memcpy_P(&testVector, test, sizeof(testVector));
 
-    std::cout << name;
+    Serial.print(name);
     printProgMem(" ... ");
 
     start = micros();
@@ -374,41 +367,41 @@ void perfSetTweak(const char *name, XTSCommon *cipher, const struct TestVector *
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / 2000.0;
+    Serial.print(elapsed / 2000.0);
     printProgMem("us per operation, ");
-    std::cout << (2000.0 * 1000000.0) / elapsed;
+    Serial.print((2000.0 * 1000000.0) / elapsed);
     printlnProgMem(" operations per second");
 }
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
-    std::cout << std::endl;
+    Serial.println();
 
     xtsaes128 = new XTS<AES128>();
     printlnProgMem("State Sizes:");
     printProgMem("XTS<AES128> ... ");
-    std::cout << sizeof(*xtsaes128) << std::endl;
+    Serial.println(sizeof(*xtsaes128));
     printProgMem("XTS<AES256> ... ");
-    std::cout << sizeof(XTS<AES256>) << std::endl;
+    Serial.println(sizeof(XTS<AES256>));
     printProgMem("XTS<Speck> ... ");
-    std::cout << sizeof(XTS<Speck>) << std::endl;
+    Serial.println(sizeof(XTS<Speck>));
     printProgMem("XTS<SpeckSmall> ... ");
-    std::cout << sizeof(XTS<SpeckSmall>) << std::endl;
+    Serial.println(sizeof(XTS<SpeckSmall>));
     printProgMem("XTS<SpeckSmall, SpeckTiny> ... ");
-    std::cout << sizeof(XTS<SpeckSmall, SpeckTiny>) << std::endl;
+    Serial.println(sizeof(XTS<SpeckSmall, SpeckTiny>));
 
     printProgMem("XTSSingleKey<AES128> ... ");
-    std::cout << sizeof(XTSSingleKey<AES128>) << std::endl;
+    Serial.println(sizeof(XTSSingleKey<AES128>));
     printProgMem("XTSSingleKey<AES256> ... ");
-    std::cout << sizeof(XTSSingleKey<AES256>) << std::endl;
+    Serial.println(sizeof(XTSSingleKey<AES256>));
     printProgMem("XTSSingleKey<Speck> ... ");
-    std::cout << sizeof(XTSSingleKey<Speck>) << std::endl;
+    Serial.println(sizeof(XTSSingleKey<Speck>));
     printProgMem("XTSSingleKey<SpeckSmall> ... ");
-    std::cout << sizeof(XTSSingleKey<SpeckSmall>) << std::endl;
+    Serial.println(sizeof(XTSSingleKey<SpeckSmall>));
 
-    std::cout << std::endl;
+    Serial.println();
 
     printlnProgMem("Test Vectors:");
     testXTS(xtsaes128, &testVectorXTSAES128_1);
@@ -418,10 +411,10 @@ void setup()
     testXTS(xtsaes128, &testVectorXTSAES128_15);
     testXTS(xtsaes128, &testVectorXTSAES128_16);
 
-    std::cout << std::endl;
+    Serial.println();
 
     printlnProgMem("Performance Tests:");
-    std::cout << std::endl;
+    Serial.println();
 
     printlnProgMem("XTS-AES-128:");
     perfEncrypt("Encrypt", xtsaes128, &testVectorXTSAES128_4);
@@ -429,7 +422,7 @@ void setup()
     perfSetKey("Set Key", xtsaes128, &testVectorXTSAES128_4);
     perfSetTweak("Set Tweak", xtsaes128, &testVectorXTSAES128_4);
     delete xtsaes128;
-    std::cout << std::endl;
+    Serial.println();
 
     printlnProgMem("XTS-AES-128 Single Key:");
     XTSSingleKey<AES128> *singleaes128 = new XTSSingleKey<AES128>();
@@ -438,7 +431,7 @@ void setup()
     perfSetKey("Set Key", singleaes128, &testVectorXTSAES128_4, 16);
     perfSetTweak("Set Tweak", singleaes128, &testVectorXTSAES128_4);
     delete singleaes128;
-    std::cout << std::endl;
+    Serial.println();
 
     printlnProgMem("XTS-AES-256 Single Key:");
     XTSSingleKey<AES256> *xtsaes256 = new XTSSingleKey<AES256>();
@@ -447,7 +440,7 @@ void setup()
     perfSetKey("Set Key", xtsaes256, &testVectorXTSAES128_4, 32);
     perfSetTweak("Set Tweak", xtsaes256, &testVectorXTSAES128_4);
     delete xtsaes256;
-    std::cout << std::endl;
+    Serial.println();
 
     printlnProgMem("XTS-SpeckSmall-256:");
     XTS<SpeckSmall, SpeckTiny> *xtsspeck = new XTS<SpeckSmall, SpeckTiny>();
@@ -456,7 +449,7 @@ void setup()
     perfSetKey("Set Key", xtsspeck, &testVectorXTSAES128_4, 64);
     perfSetTweak("Set Tweak", xtsspeck, &testVectorXTSAES128_4);
     delete xtsspeck;
-    std::cout << std::endl;
+    Serial.println();
 
     printlnProgMem("XTS-SpeckSmall-256 Single Key:");
     XTSSingleKey<SpeckSmall> *singlespeck = new XTSSingleKey<SpeckSmall>();
@@ -465,7 +458,7 @@ void setup()
     perfSetKey("Set Key", singlespeck, &testVectorXTSAES128_4, 32);
     perfSetTweak("Set Tweak", singlespeck, &testVectorXTSAES128_4);
     delete singlespeck;
-    std::cout << std::endl;
+    Serial.println();
 
     printlnProgMem("XTS-Speck-256:");
     XTS<Speck> *xtsspeck2 = new XTS<Speck>();
@@ -474,7 +467,7 @@ void setup()
     perfSetKey("Set Key", xtsspeck2, &testVectorXTSAES128_4, 64);
     perfSetTweak("Set Tweak", xtsspeck2, &testVectorXTSAES128_4);
     delete xtsspeck2;
-    std::cout << std::endl;
+    Serial.println();
 
     printlnProgMem("XTS-Speck-256 Single Key:");
     XTSSingleKey<Speck> *singlespeck2 = new XTSSingleKey<Speck>();
@@ -483,9 +476,8 @@ void setup()
     perfSetKey("Set Key", singlespeck2, &testVectorXTSAES128_4, 32);
     perfSetTweak("Set Tweak", singlespeck2, &testVectorXTSAES128_4);
     delete singlespeck2;
-    std::cout << std::endl;
+    Serial.println();
 }
-
 
 void loop()
 {

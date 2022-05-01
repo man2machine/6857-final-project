@@ -25,15 +25,8 @@ This example runs tests on the GCM implementation to verify correct behaviour.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <CryptoLW.h>
@@ -290,11 +283,11 @@ bool testCipher_N(AuthenticatedCipher *cipher, const struct TestVector *test, si
 
     cipher->clear();
     if (!cipher->setKey(test->key, cipher->keySize())) {
-        std::cout << "setKey ";
+        Serial.print("setKey ");
         return false;
     }
     if (!cipher->setIV(test->iv, test->ivsize)) {
-        std::cout << "setIV ";
+        Serial.print("setIV ");
         return false;
     }
 
@@ -315,15 +308,15 @@ bool testCipher_N(AuthenticatedCipher *cipher, const struct TestVector *test, si
     }
 
     if (memcmp(buffer, test->ciphertext, test->datasize) != 0) {
-        std::cout << buffer[0], HEX;
-        std::cout << "->";
-        std::cout << test->ciphertext[0], HEX;
+        Serial.print(buffer[0], HEX);
+        Serial.print("->");
+        Serial.print(test->ciphertext[0], HEX);
         return false;
     }
 
     cipher->computeTag(tag, sizeof(tag));
     if (memcmp(tag, test->tag, sizeof(tag)) != 0) {
-        std::cout << "computed wrong tag ... ";
+        Serial.print("computed wrong tag ... ");
         return false;
     }
 
@@ -348,7 +341,7 @@ bool testCipher_N(AuthenticatedCipher *cipher, const struct TestVector *test, si
         return false;
 
     if (!cipher->checkTag(tag, sizeof(tag))) {
-        std::cout << "tag did not check ... ";
+        Serial.print("tag did not check ... ");
         return false;
     }
 
@@ -362,8 +355,8 @@ void testCipher(AuthenticatedCipher *cipher, const struct TestVector *test)
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << test->name;
-    std::cout << " ... ";
+    Serial.print(test->name);
+    Serial.print(" ... ");
 
     ok  = testCipher_N(cipher, test, test->datasize);
     ok &= testCipher_N(cipher, test, 1);
@@ -374,9 +367,9 @@ void testCipher(AuthenticatedCipher *cipher, const struct TestVector *test)
     ok &= testCipher_N(cipher, test, 16);
 
     if (ok)
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 }
 
 void perfCipherSetKey(AuthenticatedCipher *cipher, const struct TestVector *test, const char *name)
@@ -390,8 +383,8 @@ void perfCipherSetKey(AuthenticatedCipher *cipher, const struct TestVector *test
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << name;
-    std::cout << " SetKey ... ";
+    Serial.print(name);
+    Serial.print(" SetKey ... ");
 
     start = micros();
     for (count = 0; count < 1000; ++count) {
@@ -400,10 +393,10 @@ void perfCipherSetKey(AuthenticatedCipher *cipher, const struct TestVector *test
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / 1000.0;
-    std::cout << "us per operation, ";
-    std::cout << (1000.0 * 1000000.0) / elapsed;
-    std::cout << " per second" << std::endl;
+    Serial.print(elapsed / 1000.0);
+    Serial.print("us per operation, ");
+    Serial.print((1000.0 * 1000000.0) / elapsed);
+    Serial.println(" per second");
 }
 
 void perfCipherEncrypt(AuthenticatedCipher *cipher, const struct TestVector *test, const char *name)
@@ -417,8 +410,8 @@ void perfCipherEncrypt(AuthenticatedCipher *cipher, const struct TestVector *tes
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << name;
-    std::cout << " Encrypt ... ";
+    Serial.print(name);
+    Serial.print(" Encrypt ... ");
 
     cipher->setKey(test->key, cipher->keySize());
     cipher->setIV(test->iv, test->ivsize);
@@ -428,10 +421,10 @@ void perfCipherEncrypt(AuthenticatedCipher *cipher, const struct TestVector *tes
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (128.0 * 500.0);
-    std::cout << "us per byte, ";
-    std::cout << (128.0 * 500.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (128.0 * 500.0));
+    Serial.print("us per byte, ");
+    Serial.print((128.0 * 500.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfCipherDecrypt(AuthenticatedCipher *cipher, const struct TestVector *test, const char *name)
@@ -445,8 +438,8 @@ void perfCipherDecrypt(AuthenticatedCipher *cipher, const struct TestVector *tes
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << name;
-    std::cout << " Decrypt ... ";
+    Serial.print(name);
+    Serial.print(" Decrypt ... ");
 
     cipher->setKey(test->key, cipher->keySize());
     cipher->setIV(test->iv, test->ivsize);
@@ -456,10 +449,10 @@ void perfCipherDecrypt(AuthenticatedCipher *cipher, const struct TestVector *tes
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (128.0 * 500.0);
-    std::cout << "us per byte, ";
-    std::cout << (128.0 * 500.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (128.0 * 500.0));
+    Serial.print("us per byte, ");
+    Serial.print((128.0 * 500.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfCipherAddAuthData(AuthenticatedCipher *cipher, const struct TestVector *test, const char *name)
@@ -473,8 +466,8 @@ void perfCipherAddAuthData(AuthenticatedCipher *cipher, const struct TestVector 
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << name;
-    std::cout << " AddAuthData ... ";
+    Serial.print(name);
+    Serial.print(" AddAuthData ... ");
 
     cipher->setKey(test->key, cipher->keySize());
     cipher->setIV(test->iv, test->ivsize);
@@ -485,10 +478,10 @@ void perfCipherAddAuthData(AuthenticatedCipher *cipher, const struct TestVector 
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (128.0 * 500.0);
-    std::cout << "us per byte, ";
-    std::cout << (128.0 * 500.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (128.0 * 500.0));
+    Serial.print("us per byte, ");
+    Serial.print((128.0 * 500.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfCipherComputeTag(AuthenticatedCipher *cipher, const struct TestVector *test, const char *name)
@@ -502,8 +495,8 @@ void perfCipherComputeTag(AuthenticatedCipher *cipher, const struct TestVector *
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << name;
-    std::cout << " ComputeTag ... ";
+    Serial.print(name);
+    Serial.print(" ComputeTag ... ");
 
     cipher->setKey(test->key, cipher->keySize());
     cipher->setIV(test->iv, test->ivsize);
@@ -513,10 +506,10 @@ void perfCipherComputeTag(AuthenticatedCipher *cipher, const struct TestVector *
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / 1000.0;
-    std::cout << "us per operation, ";
-    std::cout << (1000.0 * 1000000.0) / elapsed;
-    std::cout << " per second" << std::endl;
+    Serial.print(elapsed / 1000.0);
+    Serial.print("us per operation, ");
+    Serial.print((1000.0 * 1000000.0) / elapsed);
+    Serial.println(" per second");
 }
 
 void perfCipher(AuthenticatedCipher *cipher, const struct TestVector *test, const char *name)
@@ -530,26 +523,26 @@ void perfCipher(AuthenticatedCipher *cipher, const struct TestVector *test, cons
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
-    std::cout << std::endl;
+    Serial.println();
 
 #ifndef TEST_SPECK
-    std::cout << "State Sizes:" << std::endl;
-    std::cout << "GCM<AES128> ... ";
-    std::cout << sizeof(*gcmaes128) << std::endl;
-    std::cout << "GCM<AES192> ... ";
-    std::cout << sizeof(*gcmaes192) << std::endl;
-    std::cout << "GCM<AES256> ... ";
-    std::cout << sizeof(*gcmaes256) << std::endl;
-    std::cout << "GCM<Speck> ... ";
-    std::cout << sizeof(*gcmspeck) << std::endl;
-    std::cout << "GCM<SpeckTiny> ... ";
-    std::cout << sizeof(*gcmspecklm) << std::endl;
-    std::cout << std::endl;
+    Serial.println("State Sizes:");
+    Serial.print("GCM<AES128> ... ");
+    Serial.println(sizeof(*gcmaes128));
+    Serial.print("GCM<AES192> ... ");
+    Serial.println(sizeof(*gcmaes192));
+    Serial.print("GCM<AES256> ... ");
+    Serial.println(sizeof(*gcmaes256));
+    Serial.print("GCM<Speck> ... ");
+    Serial.println(sizeof(*gcmspeck));
+    Serial.print("GCM<SpeckTiny> ... ");
+    Serial.println(sizeof(*gcmspecklm));
+    Serial.println();
 #endif
 
-    std::cout << "Test Vectors:" << std::endl;
+    Serial.println("Test Vectors:");
     gcmaes128 = new GCM<AES128>();
     testCipher(gcmaes128, &testVectorGCM1);
 #ifndef TEST_SPECK
@@ -566,9 +559,9 @@ void setup()
     testCipher(gcmaes256, &testVectorGCM16);
     delete gcmaes256;
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "Performance Tests:" << std::endl;
+    Serial.println("Performance Tests:");
 #ifndef TEST_SPECK
     gcmaes128 = new GCM<AES128>();
     perfCipher(gcmaes128, &testVectorGCM1, testVectorGCM1.name);
@@ -589,7 +582,6 @@ void setup()
     delete gcmspecklm;
 #endif
 }
-
 
 void loop()
 {

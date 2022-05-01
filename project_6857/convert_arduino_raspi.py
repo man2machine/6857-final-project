@@ -7,24 +7,10 @@ Created on Thu Apr 28 16:14:19 2022
 
 INCLUDE_FIND = "#include [^\n]+"
 INITIAL_INCLUDE = """
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 """
-SERIAL_BEGIN_FIND = r"Serial.begin\(9600\);"
-SERIAL_PRINT_FIND = r"Serial.print\(([^;]*)\);"
-SERIAL_PRINT_REPLACE = r"std::cout << \1;"
-SERIAL_PRINTLN_FIND = r"Serial.println\(([^;]+)\);"
-SERIAL_PRINTLN_REPLACE = r"std::cout << \1 << std::endl;"
-SERIAL_PRINTLN_EMTPY_FIND = r"Serial.println\(\);"
-SERIAL_PRINTLN_EMTPY_REPLACE = r"std::cout << std::endl;"
 LOOP_FIND = r"void loop\(\)\s+{"
 LOOP_REPLACE = """void loop()
 {
@@ -55,10 +41,6 @@ def convert_arduino_to_raspi(arduino_test_fname, raspi_test_fname):
         arduino_file_data = f.read()
     raspi_test_file_data = arduino_file_data
     
-    raspi_test_file_data = re.sub(SERIAL_BEGIN_FIND, "", raspi_test_file_data)
-    raspi_test_file_data = re.sub(SERIAL_PRINT_FIND, SERIAL_PRINT_REPLACE, raspi_test_file_data)
-    raspi_test_file_data = re.sub(SERIAL_PRINTLN_FIND, SERIAL_PRINTLN_REPLACE, raspi_test_file_data)
-    raspi_test_file_data = re.sub(SERIAL_PRINTLN_EMTPY_FIND, SERIAL_PRINTLN_EMTPY_REPLACE, raspi_test_file_data)
     raspi_test_file_data = re.sub(LOOP_FIND, LOOP_REPLACE, raspi_test_file_data)
     
     include_locs = re.finditer(INCLUDE_FIND, raspi_test_file_data)

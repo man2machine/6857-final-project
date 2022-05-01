@@ -25,15 +25,8 @@ This example runs tests on the HKDF implementation to verify correct behaviour.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <SHA256.h>
@@ -114,8 +107,8 @@ void testHKDF(HKDFCommon *hkdf, const TestHKDFVector *test)
 {
     bool ok;
 
-    std::cout << test->name;
-    std::cout << " ... ";
+    Serial.print(test->name);
+    Serial.print(" ... ");
 
     ok  = testHKDF_N(hkdf, test, test->out_len);
     ok &= testHKDF_N(hkdf, test, 1);
@@ -129,28 +122,27 @@ void testHKDF(HKDFCommon *hkdf, const TestHKDFVector *test)
     ok &= testHKDF_N(hkdf, test, 64);
 
     if (ok)
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 }
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "State Size ... ";
-    std::cout << sizeof(HKDF<SHA256>) << std::endl;
-    std::cout << "Size Without Hash State ... ";
-    std::cout << sizeof(HKDF<SHA256>) - sizeof(SHA256) << std::endl;
-    std::cout << std::endl;
+    Serial.print("State Size ... ");
+    Serial.println(sizeof(HKDF<SHA256>));
+    Serial.print("Size Without Hash State ... ");
+    Serial.println(sizeof(HKDF<SHA256>) - sizeof(SHA256));
+    Serial.println();
 
-    std::cout << "Test Vectors:" << std::endl;
+    Serial.println("Test Vectors:");
     testHKDF(&hkdf_context, &testVectorHKDF_1);
-    std::cout << std::endl;
+    Serial.println();
 }
-
 
 void loop()
 {

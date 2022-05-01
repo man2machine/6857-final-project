@@ -26,15 +26,8 @@ Example contributor: Aswin
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <AES.h>
@@ -53,31 +46,30 @@ AES128 aes128;
 
 
 void setup() {
-  
+  Serial.begin(9600);
   aes128.setKey(key,16);// Setting Key for AES
   
-  std::cout << "Before Encryption:";
+  Serial.print("Before Encryption:");
   for(int i=0; i<sizeof(plaintext); i++){
     Serial.write(plaintext[i]);
    }
    
   aes128.encryptBlock(cypher,plaintext);//cypher->output block and plaintext->input block
-  std::cout << std::endl;
-  std::cout << "After Encryption:";
+  Serial.println();
+  Serial.print("After Encryption:");
   for(int j=0;j<sizeof(cypher);j++){
       Serial.write(cypher[j]);
     }
     
    aes128.decryptBlock(decryptedtext,cypher);
    
-  std::cout << std::endl;
-  std::cout << "After Dencryption:";
+  Serial.println();
+  Serial.print("After Dencryption:");
   for(int i=0; i<sizeof(decryptedtext); i++){
     Serial.write(decryptedtext[i]);
    }
 
 }
-
 
 void loop()
 {

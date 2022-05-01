@@ -25,15 +25,8 @@ This example runs tests on the ChaCha implementation to verify correct behaviour
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <ChaCha.h>
@@ -241,15 +234,15 @@ bool testCipher_N(ChaCha *cipher, const struct TestVector *test, size_t inc)
 
     cipher->clear();
     if (!cipher->setKey(test->key, test->keySize)) {
-        std::cout << "setKey ";
+        Serial.print("setKey ");
         return false;
     }
     if (!cipher->setIV(test->iv, cipher->ivSize())) {
-        std::cout << "setIV ";
+        Serial.print("setIV ");
         return false;
     }
     if (!cipher->setCounter(test->counter, 8)) {
-        std::cout << "setCounter ";
+        Serial.print("setCounter ");
         return false;
     }
 
@@ -263,9 +256,9 @@ bool testCipher_N(ChaCha *cipher, const struct TestVector *test, size_t inc)
     }
 
     if (memcmp(output, test->ciphertext, test->size) != 0) {
-        std::cout << output[0], HEX;
-        std::cout << "->";
-        std::cout << test->ciphertext[0], HEX;
+        Serial.print(output[0], HEX);
+        Serial.print("->");
+        Serial.print(test->ciphertext[0], HEX);
         return false;
     }
 
@@ -293,8 +286,8 @@ void testCipher(ChaCha *cipher, const struct TestVector *test)
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << test->name;
-    std::cout << " ... ";
+    Serial.print(test->name);
+    Serial.print(" ... ");
 
     cipher->setNumRounds(test->rounds);
 
@@ -307,9 +300,9 @@ void testCipher(ChaCha *cipher, const struct TestVector *test)
     ok &= testCipher_N(cipher, test, 16);
 
     if (ok)
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 }
 
 void perfCipherSetKey(ChaCha *cipher, const struct TestVector *test)
@@ -321,8 +314,8 @@ void perfCipherSetKey(ChaCha *cipher, const struct TestVector *test)
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << test->name;
-    std::cout << " SetKey ... ";
+    Serial.print(test->name);
+    Serial.print(" SetKey ... ");
 
     cipher->setNumRounds(test->rounds);
     start = micros();
@@ -332,10 +325,10 @@ void perfCipherSetKey(ChaCha *cipher, const struct TestVector *test)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / 1000.0;
-    std::cout << "us per operation, ";
-    std::cout << (1000.0 * 1000000.0) / elapsed;
-    std::cout << " per second" << std::endl;
+    Serial.print(elapsed / 1000.0);
+    Serial.print("us per operation, ");
+    Serial.print((1000.0 * 1000000.0) / elapsed);
+    Serial.println(" per second");
 }
 
 void perfCipherEncrypt(ChaCha *cipher, const struct TestVector *test)
@@ -347,8 +340,8 @@ void perfCipherEncrypt(ChaCha *cipher, const struct TestVector *test)
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << test->name;
-    std::cout << " Encrypt ... ";
+    Serial.print(test->name);
+    Serial.print(" Encrypt ... ");
 
     cipher->setNumRounds(test->rounds);
     cipher->setKey(test->key, test->keySize);
@@ -359,10 +352,10 @@ void perfCipherEncrypt(ChaCha *cipher, const struct TestVector *test)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (sizeof(buffer) * 500.0);
-    std::cout << "us per byte, ";
-    std::cout << (sizeof(buffer) * 500.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (sizeof(buffer) * 500.0));
+    Serial.print("us per byte, ");
+    Serial.print((sizeof(buffer) * 500.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfCipherDecrypt(ChaCha *cipher, const struct TestVector *test)
@@ -374,8 +367,8 @@ void perfCipherDecrypt(ChaCha *cipher, const struct TestVector *test)
     memcpy_P(&testVector, test, sizeof(TestVector));
     test = &testVector;
 
-    std::cout << test->name;
-    std::cout << " Decrypt ... ";
+    Serial.print(test->name);
+    Serial.print(" Decrypt ... ");
 
     cipher->setNumRounds(test->rounds);
     cipher->setKey(test->key, test->keySize);
@@ -386,10 +379,10 @@ void perfCipherDecrypt(ChaCha *cipher, const struct TestVector *test)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (sizeof(buffer) * 500.0);
-    std::cout << "us per byte, ";
-    std::cout << (sizeof(buffer) * 500.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (sizeof(buffer) * 500.0));
+    Serial.print("us per byte, ");
+    Serial.print((sizeof(buffer) * 500.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfCipher(ChaCha *cipher, const struct TestVector *test)
@@ -401,15 +394,15 @@ void perfCipher(ChaCha *cipher, const struct TestVector *test)
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "State Size ...";
-    std::cout << sizeof(ChaCha) << std::endl;
-    std::cout << std::endl;
+    Serial.print("State Size ...");
+    Serial.println(sizeof(ChaCha));
+    Serial.println();
 
-    std::cout << "Test Vectors:" << std::endl;
+    Serial.println("Test Vectors:");
     testCipher(&chacha, &testVectorChaCha20_128);
     testCipher(&chacha, &testVectorChaCha20_256);
     testCipher(&chacha, &testVectorChaCha12_128);
@@ -417,9 +410,9 @@ void setup()
     testCipher(&chacha, &testVectorChaCha8_128);
     testCipher(&chacha, &testVectorChaCha8_256);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "Performance Tests:" << std::endl;
+    Serial.println("Performance Tests:");
     perfCipher(&chacha, &testVectorChaCha20_128);
     perfCipher(&chacha, &testVectorChaCha20_256);
     perfCipher(&chacha, &testVectorChaCha12_128);
@@ -427,7 +420,6 @@ void setup()
     perfCipher(&chacha, &testVectorChaCha8_128);
     perfCipher(&chacha, &testVectorChaCha8_256);
 }
-
 
 void loop()
 {

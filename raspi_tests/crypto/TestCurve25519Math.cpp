@@ -29,15 +29,8 @@ of the full curve operation itself.
 #define TEST_CURVE25519_FIELD_OPS 1
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <Curve25519.h>
@@ -108,16 +101,16 @@ int compare(const limb_t *x, const char *y)
 void printNumber(const char *name, const limb_t *x)
 {
     static const char hexchars[] = "0123456789ABCDEF";
-    std::cout << name;
-    std::cout << " = ";
+    Serial.print(name);
+    Serial.print(" = ");
     for (uint8_t posn = NUM_LIMBS; posn > 0; --posn) {
         for (uint8_t bit = LIMB_BITS; bit > 0; ) {
             bit -= 4;
-            std::cout << hexchars[(x[posn - 1] >> bit) & 0x0F];
+            Serial.print(hexchars[(x[posn - 1] >> bit) & 0x0F]);
         }
-        std::cout << ' ';
+        Serial.print(' ');
     }
-    std::cout << std::endl;
+    Serial.println();
 }
 
 // Standard numbers that are useful in field operation tests.
@@ -164,7 +157,7 @@ void printProgMem(const char *str)
 {
     uint8_t ch;
     while ((ch = pgm_read_byte((uint8_t *)str)) != '\0') {
-        std::cout << (char)ch;
+        Serial.print((char)ch);
         ++str;
     }
 }
@@ -378,9 +371,9 @@ void simpleMod(limb_t *x)
 void testAdd(const char *x, const char *y)
 {
     printProgMem(x);
-    std::cout << " + ";
+    Serial.print(" + ");
     printProgMem(y);
-    std::cout << ": ";
+    Serial.print(": ");
     Serial.flush();
 
     fromString(arg1, NUM_LIMBS, x);
@@ -390,9 +383,9 @@ void testAdd(const char *x, const char *y)
     simpleAdd(result2, arg1, arg2);
 
     if (compare(result, result2) == 0) {
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", result);
         printNumber("expected", result2);
     }
@@ -400,21 +393,21 @@ void testAdd(const char *x, const char *y)
 
 void testAdd()
 {
-    std::cout << "Addition:" << std::endl;
+    Serial.println("Addition:");
     foreach_number (x) {
         foreach_number (y) {
             testAdd(x, y);
         }
     }
-    std::cout << std::endl;
+    Serial.println();
 }
 
 void testSub(const char *x, const char *y)
 {
     printProgMem(x);
-    std::cout << " - ";
+    Serial.print(" - ");
     printProgMem(y);
-    std::cout << ": ";
+    Serial.print(": ");
     Serial.flush();
 
     fromString(arg1, NUM_LIMBS, x);
@@ -433,9 +426,9 @@ void testSub(const char *x, const char *y)
     }
 
     if (compare(result, result2) == 0) {
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", result);
         printNumber("expected", result2);
     }
@@ -443,21 +436,21 @@ void testSub(const char *x, const char *y)
 
 void testSub()
 {
-    std::cout << "Subtraction:" << std::endl;
+    Serial.println("Subtraction:");
     foreach_number (x) {
         foreach_number (y) {
             testSub(x, y);
         }
     }
-    std::cout << std::endl;
+    Serial.println();
 }
 
 void testMul(const char *x, const char *y)
 {
     printProgMem(x);
-    std::cout << " * ";
+    Serial.print(" * ");
     printProgMem(y);
-    std::cout << ": ";
+    Serial.print(": ");
     Serial.flush();
 
     fromString(arg1, NUM_LIMBS, x);
@@ -472,9 +465,9 @@ void testMul(const char *x, const char *y)
     simpleMod(result2);
 
     if (compare(result, result2) == 0) {
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", result);
         printNumber("expected", result2);
     }
@@ -482,21 +475,21 @@ void testMul(const char *x, const char *y)
 
 void testMul()
 {
-    std::cout << "Multiplication:" << std::endl;
+    Serial.println("Multiplication:");
     foreach_number (x) {
         foreach_number (y) {
             testMul(x, y);
         }
     }
-    std::cout << std::endl;
+    Serial.println();
 }
 
 void testMulA24(const char *x)
 {
     printProgMem(x);
-    std::cout << " * ";
+    Serial.print(" * ");
     printProgMem(num_a24);
-    std::cout << ": ";
+    Serial.print(": ");
     Serial.flush();
 
     fromString(arg1, NUM_LIMBS, x);
@@ -507,9 +500,9 @@ void testMulA24(const char *x)
     simpleMod(result2);
 
     if (compare(result, result2) == 0) {
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual  ", result);
         printNumber("expected", result2);
     }
@@ -517,19 +510,19 @@ void testMulA24(const char *x)
 
 void testMulA24()
 {
-    std::cout << "Multiplication by a24:" << std::endl;
+    Serial.println("Multiplication by a24:");
     foreach_number (x) {
         testMulA24(x);
     }
-    std::cout << std::endl;
+    Serial.println();
 }
 
 void testSwap(const char *x, const char *y, uint8_t select)
 {
     printProgMem(x);
-    std::cout << " <-> ";
+    Serial.print(" <-> ");
     printProgMem(y);
-    std::cout << ": ";
+    Serial.print(": ");
     Serial.flush();
 
     fromString(arg1, NUM_LIMBS, x);
@@ -558,15 +551,15 @@ void testSwap(const char *x, const char *y, uint8_t select)
         ok = compare(result, arg1) == 0 && compare(result2, arg2) == 0;
 
     if (ok) {
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
     }
 }
 
 void testSwap()
 {
-    std::cout << "Swap:" << std::endl;
+    Serial.println("Swap:");
     uint8_t bit = 0;
     foreach_number (x) {
         foreach_number (y) {
@@ -574,14 +567,14 @@ void testSwap()
             bit = (bit + 1) % 8;
         }
     }
-    std::cout << std::endl;
+    Serial.println();
 }
 
 void testRecip(const char *x)
 {
     printProgMem(x);
-    std::cout << "^-1";
-    std::cout << ": ";
+    Serial.print("^-1");
+    Serial.print(": ");
     Serial.flush();
 
     fromString(arg1, NUM_LIMBS, x);
@@ -598,27 +591,27 @@ void testRecip(const char *x)
     }
 
     if (ok) {
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual", result);
     }
 }
 
 void testRecip()
 {
-    std::cout << "Reciprocal:" << std::endl;
+    Serial.println("Reciprocal:");
     foreach_number (x) {
         testRecip(x);
     }
-    std::cout << std::endl;
+    Serial.println();
 }
 
 void testSqrt(const char *x)
 {
-    std::cout << "sqrt(";
+    Serial.print("sqrt(");
     printProgMem(x);
-    std::cout << "^2): ";
+    Serial.print("^2): ");
     Serial.flush();
 
     fromString(arg1, NUM_LIMBS, x);
@@ -635,13 +628,13 @@ void testSqrt(const char *x)
             ok = (compare(result, temp) == 0);
         }
     } else {
-        std::cout << "no sqrt ... " << std::endl;
+        Serial.println("no sqrt ... ");
     }
 
     if (ok) {
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual", result);
         printNumber("expected", arg1);
     }
@@ -649,36 +642,36 @@ void testSqrt(const char *x)
 
 void testNoSqrt(const char *x)
 {
-    std::cout << "no sqrt(";
+    Serial.print("no sqrt(");
     printProgMem(x);
-    std::cout << "): ";
+    Serial.print("): ");
     Serial.flush();
 
     fromString(arg1, NUM_LIMBS, x);
     bool ok = !Curve25519::sqrt(result, arg1);
 
     if (ok) {
-        std::cout << "ok" << std::endl;
+        Serial.println("ok");
     } else {
-        std::cout << "failed" << std::endl;
+        Serial.println("failed");
         printNumber("actual", result);
     }
 }
 
 void testSqrt()
 {
-    std::cout << "Square root:" << std::endl;
+    Serial.println("Square root:");
     foreach_number (x) {
         testSqrt(x);
     }
     testNoSqrt(num_128);
     testNoSqrt(num_pi);
-    std::cout << std::endl;
+    Serial.println();
 }
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
     testAdd();
     testSub();
@@ -688,7 +681,6 @@ void setup()
     testRecip();
     testSqrt();
 }
-
 
 void loop()
 {

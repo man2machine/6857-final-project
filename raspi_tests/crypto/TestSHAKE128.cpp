@@ -26,15 +26,8 @@ correct behaviour.
 */
 
 
-#include <iostream>
-#include <chrono>
-
-unsigned long micros()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-}
-
 #include <Piduino.h>
+#define Serial Console
 
 #include <Crypto.h>
 #include <SHAKE.h>
@@ -205,8 +198,8 @@ bool testSHAKE_N(SHAKE *shake, const struct TestHashVectorSHAKE *test, size_t in
 
     // Print the test name if necessary.
     if (printName) {
-        std::cout << test->name;
-        std::cout << " ... ";
+        Serial.print(test->name);
+        Serial.print(" ... ");
     }
 
     // Hash the input data.
@@ -270,9 +263,9 @@ void testSHAKE(SHAKE *shake, const struct TestHashVectorSHAKE *test)
     ok &= testSHAKE_N(shake, test, 64);
 
     if (ok)
-        std::cout << "Passed" << std::endl;
+        Serial.println("Passed");
     else
-        std::cout << "Failed" << std::endl;
+        Serial.println("Failed");
 }
 
 void perfUpdate(SHAKE *shake)
@@ -281,7 +274,7 @@ void perfUpdate(SHAKE *shake)
     unsigned long elapsed;
     int count;
 
-    std::cout << "Updating ... ";
+    Serial.print("Updating ... ");
 
     for (size_t posn = 0; posn < MAX_SHAKE_OUTPUT; ++posn)
         output[posn] = (uint8_t)posn;
@@ -294,10 +287,10 @@ void perfUpdate(SHAKE *shake)
     shake->extend(output, 0);   // Force a finalize after the update.
     elapsed = micros() - start;
 
-    std::cout << elapsed / (MAX_SHAKE_OUTPUT * 300.0);
-    std::cout << "us per byte, ";
-    std::cout << (MAX_SHAKE_OUTPUT * 300.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (MAX_SHAKE_OUTPUT * 300.0));
+    Serial.print("us per byte, ");
+    Serial.print((MAX_SHAKE_OUTPUT * 300.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfExtend(SHAKE *shake)
@@ -306,7 +299,7 @@ void perfExtend(SHAKE *shake)
     unsigned long elapsed;
     int count;
 
-    std::cout << "Extending ... ";
+    Serial.print("Extending ... ");
 
     for (size_t posn = 0; posn < MAX_SHAKE_OUTPUT; ++posn)
         output[posn] = (uint8_t)posn;
@@ -320,10 +313,10 @@ void perfExtend(SHAKE *shake)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (MAX_SHAKE_OUTPUT * 300.0);
-    std::cout << "us per byte, ";
-    std::cout << (MAX_SHAKE_OUTPUT * 300.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (MAX_SHAKE_OUTPUT * 300.0));
+    Serial.print("us per byte, ");
+    Serial.print((MAX_SHAKE_OUTPUT * 300.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void perfEncrypt(SHAKE *shake)
@@ -332,7 +325,7 @@ void perfEncrypt(SHAKE *shake)
     unsigned long elapsed;
     int count;
 
-    std::cout << "Encrypting ... ";
+    Serial.print("Encrypting ... ");
 
     for (size_t posn = 0; posn < MAX_SHAKE_OUTPUT; ++posn)
         output[posn] = (uint8_t)posn;
@@ -346,35 +339,34 @@ void perfEncrypt(SHAKE *shake)
     }
     elapsed = micros() - start;
 
-    std::cout << elapsed / (MAX_SHAKE_OUTPUT * 300.0);
-    std::cout << "us per byte, ";
-    std::cout << (MAX_SHAKE_OUTPUT * 300.0 * 1000000.0) / elapsed;
-    std::cout << " bytes per second" << std::endl;
+    Serial.print(elapsed / (MAX_SHAKE_OUTPUT * 300.0));
+    Serial.print("us per byte, ");
+    Serial.print((MAX_SHAKE_OUTPUT * 300.0 * 1000000.0) / elapsed);
+    Serial.println(" bytes per second");
 }
 
 void setup()
 {
-    
+    Serial.begin(9600);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "State Size ...";
-    std::cout << sizeof(SHAKE128) << std::endl;
-    std::cout << std::endl;
+    Serial.print("State Size ...");
+    Serial.println(sizeof(SHAKE128));
+    Serial.println();
 
-    std::cout << "Test Vectors:" << std::endl;
+    Serial.println("Test Vectors:");
     testSHAKE(&shake128, &testVectorSHAKE128_1);
     testSHAKE(&shake128, &testVectorSHAKE128_2);
     testSHAKE(&shake128, &testVectorSHAKE128_3);
 
-    std::cout << std::endl;
+    Serial.println();
 
-    std::cout << "Performance Tests:" << std::endl;
+    Serial.println("Performance Tests:");
     perfUpdate(&shake128);
     perfExtend(&shake128);
     perfEncrypt(&shake128);
 }
-
 
 void loop()
 {
