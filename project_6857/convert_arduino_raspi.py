@@ -11,6 +11,16 @@ INITIAL_INCLUDE = """
 #define Serial Console
 
 """
+PGMSPACE_FIND = """#if defined(ESP8266) || defined(ESP32)
+#include <pgmspace.h>
+#else
+#include <avr/pgmspace.h>
+#endif"""
+PGMSPACE_REPLACE = """#if defined(ESP8266) || defined(ESP32)
+#include <avr/pgmspace.h>
+#else
+#include <pgmspace.h>
+#endif"""
 LOOP_FIND = r"void loop\(\)\s+{"
 LOOP_REPLACE = """void loop()
 {
@@ -42,6 +52,7 @@ def convert_arduino_to_raspi(arduino_test_fname, raspi_test_fname):
     raspi_test_file_data = arduino_file_data
     
     raspi_test_file_data = re.sub(LOOP_FIND, LOOP_REPLACE, raspi_test_file_data)
+    raspi_test_file_data = raspi_test_file_data.replace(PGMSPACE_FIND, PGMSPACE_REPLACE)
     
     include_locs = re.finditer(INCLUDE_FIND, raspi_test_file_data)
     first_include_start = next(include_locs).start()

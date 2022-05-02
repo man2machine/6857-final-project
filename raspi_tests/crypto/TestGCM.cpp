@@ -36,9 +36,9 @@ This example runs tests on the GCM implementation to verify correct behaviour.
 #include <GCM.h>
 #include <string.h>
 #if defined(ESP8266) || defined(ESP32)
-#include <pgmspace.h>
-#else
 #include <avr/pgmspace.h>
+#else
+#include <pgmspace.h>
 #endif
 
 // There isn't enough memory to test both AES and Speck on the Uno,

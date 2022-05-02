@@ -32,9 +32,9 @@ This example runs tests on the ChaCha implementation to verify correct behaviour
 #include <ChaCha.h>
 #include <string.h>
 #if defined(ESP8266) || defined(ESP32)
-#include <pgmspace.h>
-#else
 #include <avr/pgmspace.h>
+#else
+#include <pgmspace.h>
 #endif
 
 #define MAX_PLAINTEXT_SIZE  64
