@@ -1,0 +1,12 @@
+
+State Size ...232
+
+Test Vectors:
+SHAKE256 #1 ... Passed
+SHAKE256 #2 ... Passed
+SHAKE256 #3 ... Passed
+
+Performance Tests:
+Updating ... 3.65us per byte, 274117.31 bytes per second
+Extending ... 3.55us per byte, 281306.31 bytes per second
+Encrypting ... 3.64us per byte, 274506.31 bytes per second

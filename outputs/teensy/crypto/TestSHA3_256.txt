@@ -1,0 +1,14 @@
+
+State Size ...224
+
+Test Vectors:
+SHA3-256 #1 ... Passed
+SHA3-256 #2 ... Passed
+SHA3-256 #3 ... Passed
+SHA3-256 #4 ... Passed
+SHA3-256 #5 ... Passed
+HMAC-SHA3-256 keysize=0 ... Passed
+HMAC-SHA3-256 keysize=1 ... Passed
+HMAC-SHA3-256 keysize=32 ... Passed
+HMAC-SHA3-256 keysize=136 ... Passed
+HMAC-SHA3-256 keysize=137 ...

@@ -1,0 +1,27 @@
+Fixed test vectors:
+Computing Alice's public key ... ok (elapsed 564614 us)
+Computing Bob's public key ... ok (elapsed 564614 us)
+Computing Alice's shared secret ... ok (elapsed 564811 us)
+Computing Bob's shared secret ... ok (elapsed 564802 us)
+
+Diffie-Hellman key exchange:
+Generate random k/f for Alice ... elapsed 564716 us
+Generate random k/f for Bob ... elapsed 564712 us
+Generate shared secret for Alice ... elapsed 564798 us
+Generate shared secret for Bob ... elapsed 564797 us
+Check that the shared secrets match ... ok
+
+Digital signatures:
+P-521 #1 Sign ... 701759 us ... ok
+P-521 #1 Verify ... 1290834 us ... ok
+P-521 #1 Derive Public Key ... 564619 us ... ok
+P-521 #2 Sign ... 708273 us ... ok
+P-521 #2 Verify ... 1291089 us ... ok
+P-521 #2 Derive Public Key ... 564618 us ... ok
+P-521 #3 Sign ... 701756 us ... ok
+P-521 #3 Verify ... 1290836 us ... ok
+P-521 #3 Derive Public Key ... 564617 us ... ok
+P-521 #4 Sign ... 708276 us ... ok
+P-521 #4 Verify ... 1291088 us ... ok
+P-521 #4 Derive Public Key ... 564616 us ... ok
+

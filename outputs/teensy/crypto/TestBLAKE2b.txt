@@ -1,0 +1,20 @@
+
+State Size ...224
+
+Test Vectors:
+BLAKE2b #1 ... Passed
+BLAKE2b #2 ... Passed
+BLAKE2b #3 ... Passed
+BLAKE2b #4 ... Passed
+HMAC-BLAKE2b keysize=0 ... Passed
+HMAC-BLAKE2b keysize=1 ... Passed
+HMAC-BLAKE2b keysize=64 ... Passed
+HMAC-BLAKE2b keysize=128 ... Passed
+HMAC-BLAKE2b keysize=129 ... Passed
+HMAC-BLAKE2b keysize=130 ... Passed
+BLAKE2b RFC 7693 ... Passed
+
+Performance Tests:
+Hashing ... 1.43us per byte, 697829.25 bytes per second
+Keyed Reset ... 184.97us per op, 5406.40 ops per second
+Finalizing ... 182.55us per op, 5478.07 ops per second

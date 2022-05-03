@@ -1,0 +1,14 @@
+
+State Size ...224
+
+Test Vectors:
+SHA3-512 #1 ... Passed
+SHA3-512 #2 ... Passed
+SHA3-512 #3 ... Passed
+SHA3-512 #4 ... Passed
+SHA3-512 #5 ... Passed
+HMAC-SHA3-512 keysize=0 ... Passed
+HMAC-SHA3-512 keysize=1 ... Passed
+HMAC-SHA3-512 keysize=64 ... Passed
+HMAC-SHA3-512 keysize=72 ... Passed
+HMAC-SHA3-512 keysize=73 ...

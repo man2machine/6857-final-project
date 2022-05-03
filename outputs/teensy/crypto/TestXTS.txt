@@ -1,0 +1,82 @@
+
+State Sizes:
+XTS<AES128> ... 408
+XTS<AES256> ... 536
+XTS<Speck> ... 608
+XTS<SpeckSmall> ... 192
+XTS<SpeckSmall, SpeckTiny> ... 160
+XTSSingleKey<AES128> ... 220
+XTSSingleKey<AES256> ... 284
+XTSSingleKey<Speck> ... 320
+XTSSingleKey<SpeckSmall> ... 112
+
+Test Vectors:
+XTS-AES-128 #1 Encrypt ... Passed
+XTS-AES-128 #1 Decrypt ... Passed
+XTS-AES-128 #1 Encrypt In-Place ... Passed
+XTS-AES-128 #1 Decrypt In-Place ... Passed
+XTS-AES-128 #2 Encrypt ... Passed
+XTS-AES-128 #2 Decrypt ... Passed
+XTS-AES-128 #2 Encrypt In-Place ... Passed
+XTS-AES-128 #2 Decrypt In-Place ... Passed
+XTS-AES-128 #3 Encrypt ... Passed
+XTS-AES-128 #3 Decrypt ... Passed
+XTS-AES-128 #3 Encrypt In-Place ... Passed
+XTS-AES-128 #3 Decrypt In-Place ... Passed
+XTS-AES-128 #4 Encrypt ... Passed
+XTS-AES-128 #4 Decrypt ... Passed
+XTS-AES-128 #4 Encrypt In-Place ... Passed
+XTS-AES-128 #4 Decrypt In-Place ... Passed
+XTS-AES-128 #15 Encrypt ... Passed
+XTS-AES-128 #15 Decrypt ... Passed
+XTS-AES-128 #15 Encrypt In-Place ... Passed
+XTS-AES-128 #15 Decrypt In-Place ... Passed
+XTS-AES-128 #16 Encrypt ... Passed
+XTS-AES-128 #16 Decrypt ... Passed
+XTS-AES-128 #16 Encrypt In-Place ... Passed
+XTS-AES-128 #16 Decrypt In-Place ... Passed
+
+Performance Tests:
+
+XTS-AES-128:
+Encrypt ... 4.91us per byte, 203514.44 bytes per second
+Decrypt ... 9.96us per byte, 100373.27 bytes per second
+Set Key ... 46.53us per operation, 21492.67 operations per second
+Set Tweak ... 75.29us per operation, 13281.80 operations per second
+
+XTS-AES-128 Single Key:
+Encrypt ... 4.91us per byte, 203502.80 bytes per second
+Decrypt ... 9.96us per byte, 100368.23 bytes per second
+Set Key ... 23.18us per operation, 43135.05 operations per second
+Set Tweak ... 75.21us per operation, 13296.90 operations per second
+
+XTS-AES-256 Single Key:
+Encrypt ... 6.81us per byte, 146938.63 bytes per second
+Decrypt ... 14.10us per byte, 70930.00 bytes per second
+Set Key ... 32.79us per operation, 30498.96 operations per second
+Set Tweak ... 105.90us per operation, 9442.78 operations per second
+
+XTS-SpeckSmall-256:
+Encrypt ... 2.07us per byte, 483910.00 bytes per second
+Decrypt ... 2.23us per byte, 449154.31 bytes per second
+Set Key ... 23.05us per operation, 43377.36 operations per second
+Set Tweak ... 30.15us per operation, 33162.55 operations per second
+
+XTS-SpeckSmall-256 Single Key:
+Encrypt ... 2.07us per byte, 483910.00 bytes per second
+Decrypt ... 2.23us per byte, 449160.63 bytes per second
+Set Key ... 20.26us per operation, 49369.31 operations per second
+Set Tweak ... 30.15us per operation, 33163.10 operations per second
+
+XTS-Speck-256:
+Encrypt ... 0.91us per byte, 1103144.00 bytes per second
+Decrypt ... 0.94us per byte, 1059813.25 bytes per second
+Set Key ... 50.27us per operation, 19891.79 operations per second
+Set Tweak ... 11.45us per operation, 87355.32 operations per second
+
+XTS-Speck-256 Single Key:
+Encrypt ... 0.91us per byte, 1103067.88 bytes per second
+Decrypt ... 0.94us per byte, 1059813.25 bytes per second
+Set Key ... 25.18us per operation, 39715.64 operations per second
+Set Tweak ... 11.45us per operation, 87351.50 operations per second
+

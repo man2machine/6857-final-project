@@ -1,0 +1,16 @@
+
+State Sizes:
+EAX<AES128> ... 284
+EAX<AES256> ... 348
+EAX<Speck> ... 384
+EAX<SpeckTiny> ... 144
+
+Test Vectors:
+EAX #1 ... Passed
+EAX #2 ... Passed
+EAX #3 ... Passed
+EAX #4 ... Passed
+EAX #5 ... Passed
+EAX #6 ... Passed
+EAX #7 ... Passed
+EAX #8 ...

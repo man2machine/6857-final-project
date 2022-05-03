@@ -1,0 +1,13 @@
+
+State Size ... 36
+
+Test Vectors:
+GHASH #1 ... Passed
+GHASH #2 ... Passed
+GHASH #3 ... Passed
+GHASH #4 ... Passed
+
+Performance Tests:
+Hashing ... 2.27us per byte, 441364.09 bytes per second
+Set Key ... 2.63us per op, 380083.63 ops per second
+Finalize ... 0.81us per op, 1239157.38 ops per second

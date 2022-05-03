@@ -1,0 +1,411 @@
+
+ChaChaPoly:
+   encrypt 128 byte packets ... 1.23us per byte, 815359.31 bytes per second
+   decrypt 128 byte packets ... 1.32us per byte, 755104.31 bytes per second
+   encrypt  16 byte packets ... 4.69us per byte, 213376.02 bytes per second
+   decrypt  16 byte packets ... 4.90us per byte, 204281.39 bytes per second
+
+BLAKE2s:
+   hash 1024 bytes ... 0.86us per byte, 1161125.38 bytes per second
+   hash  128 bytes0.58x, 8.39us per byte, 119186.55 bytes per second
+   average ... 0.43x
+
+PHOTON-Beetle-AEAD-ENC-128:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.09x, 13.56us per byte, 73735.18 bytes per second
+   decrypt 128 byte packets ... 0.10x, 13.65us per byte, 73250.94 bytes per second
+   encrypt  16 byte packets ... 0.20x, 24.02us per byte, 41624.61 bytes per second
+   decrypt  16 byte packets ... 0.20x, 24.20us per byte, 41314.99 bytes per second
+   average ... 0.14x
+
+PHOTON-Beetle-AEAD-ENC-32:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.03x, 48.99us per byte, 20410.27 bytes per second
+   decrypt 128 byte packets ... 0.03x, 49.09us per byte, 20370.68 bytes per second
+   encrypt  16 byte packets ... 0.08x, 59.46us per byte, 16818.39 bytes per second
+   decrypt  16 byte packets ... 0.08x, 59.64us per byte, 16768.35 bytes per second
+   average ... 0.04x
+
+Romulus-N:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.16x, 7.74us per byte, 129117.25 bytes per second
+   decrypt 128 byte packets ... 0.17x, 7.85us per byte, 127336.07 bytes per second
+   encrypt  16 byte packets ... 0.23x, 20.48us per byte, 48821.32 bytes per second
+   decrypt  16 byte packets ... 0.24x, 20.70us per byte, 48316.71 bytes per second
+   average ... 0.20x
+
+Romulus-M:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.10x, 12.80us per byte, 78134.97 bytes per second
+   decrypt 128 byte packets ... 0.10x, 12.91us per byte, 77465.52 bytes per second
+   encrypt  16 byte packets ... 0.15x, 30.50us per byte, 32787.24 bytes per second
+   decrypt  16 byte packets ... 0.16x, 30.72us per byte, 32550.45 bytes per second
+   average ... 0.13x
+
+Romulus-T:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.04x, 30.36us per byte, 32938.22 bytes per second
+   decrypt 128 byte packets ... 0.04x, 30.46us per byte, 32826.82 bytes per second
+   encrypt  16 byte packets ... 0.07x, 68.17us per byte, 14668.83 bytes per second
+   decrypt  16 byte packets ... 0.07x, 68.37us per byte, 14625.74 bytes per second
+   average ... 0.05x
+
+Schwaemm256-128:
+   sanity check ... ok
+   encrypt 128 byte packets ... 1.30x, 0.95us per byte, 1056759.50 bytes per second
+   decrypt 128 byte packets ... 1.28x, 1.04us per byte, 965265.50 bytes per second
+   encrypt  16 byte packets ... 1.43x, 3.27us per byte, 305835.72 bytes per second
+   decrypt  16 byte packets ... 1.41x, 3.48us per byte, 287270.34 bytes per second
+   average ... 1.36x
+
+Schwaemm192-192:
+   sanity check ... ok
+   encrypt 128 byte packets ... 1.02x, 1.20us per byte, 835149.38 bytes per second
+   decrypt 128 byte packets ... 1.05x, 1.27us per byte, 789524.00 bytes per second
+   encrypt  16 byte packets ... 1.41x, 3.32us per byte, 301503.75 bytes per second
+   decrypt  16 byte packets ... 1.37x, 3.56us per byte, 280544.25 bytes per second
+   average ... 1.22x
+
+Schwaemm128-128:
+   sanity check ... ok
+   encrypt 128 byte packets ... 1.19x, 1.03us per byte, 968618.25 bytes per second
+   decrypt 128 byte packets ... 1.21x, 1.09us per byte, 914547.00 bytes per second
+   encrypt  16 byte packets ... 2.16x, 2.17us per byte, 460008.06 bytes per second
+   decrypt  16 byte packets ... 2.08x, 2.36us per byte, 423900.94 bytes per second
+   average ... 1.61x
+
+Schwaemm256-256:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.78x, 1.56us per byte, 639772.88 bytes per second
+   decrypt 128 byte packets ... 0.80x, 1.66us per byte, 603973.00 bytes per second
+   encrypt  16 byte packets ... 0.83x, 5.67us per byte, 176357.77 bytes per second
+   decrypt  16 byte packets ... 0.82x, 5.98us per byte, 167202.53 bytes per second
+   average ... 0.81x
+
+TinyJAMBU-128:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.80x, 1.54us per byte, 648633.31 bytes per second
+   decrypt 128 byte packets ... 0.82x, 1.62us per byte, 618746.06 bytes per second
+   encrypt  16 byte packets ... 1.57x, 2.98us per byte, 335753.56 bytes per second
+   decrypt  16 byte packets ... 1.56x, 3.13us per byte, 318979.28 bytes per second
+   average ... 1.13x
+
+TinyJAMBU-192:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.46x, 2.66us per byte, 376498.28 bytes per second
+   decrypt 128 byte packets ... 0.48x, 2.77us per byte, 360859.19 bytes per second
+   encrypt  16 byte packets ... 0.93x, 5.03us per byte, 198870.58 bytes per second
+   decrypt  16 byte packets ... 0.94x, 5.22us per byte, 191612.17 bytes per second
+   average ... 0.66x
+
+TinyJAMBU-256:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.41x, 2.97us per byte, 337206.81 bytes per second
+   decrypt 128 byte packets ... 0.43x, 3.06us per byte, 326884.19 bytes per second
+   encrypt  16 byte packets ... 0.86x, 5.46us per byte, 183186.53 bytes per second
+   decrypt  16 byte packets ... 0.87x, 5.62us per byte, 177829.81 bytes per second
+   average ... 0.60x
+
+Xoodyak:
+   sanity check ... ok
+   encrypt 128 byte packets ... 1.05x, 1.17us per byte, 856095.69 bytes per second
+   decrypt 128 byte packets ... 1.06x, 1.25us per byte, 798761.94 bytes per second
+   encrypt  16 byte packets ... 1.37x, 3.43us per byte, 291867.84 bytes per second
+   decrypt  16 byte packets ... 1.36x, 3.59us per byte, 278307.66 bytes per second
+   average ... 1.22x
+
+ASCON-128-Masked:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.17x, 7.41us per byte, 134889.34 bytes per second
+   decrypt 128 byte packets ... 0.18x, 7.51us per byte, 133127.41 bytes per second
+   encrypt  16 byte packets ... 0.21x, 22.46us per byte, 44524.59 bytes per second
+   decrypt  16 byte packets ... 0.22x, 22.66us per byte, 44129.53 bytes per second
+   average ... 0.19x
+
+ASCON-128a-Masked:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.21x, 5.97us per byte, 167564.70 bytes per second
+   decrypt 128 byte packets ... 0.22x, 6.07us per byte, 164807.22 bytes per second
+   encrypt  16 byte packets ... 0.22x, 21.17us per byte, 47240.93 bytes per second
+   decrypt  16 byte packets ... 0.23x, 21.38us per byte, 46780.11 bytes per second
+   average ... 0.22x
+
+ASCON-80pq-Masked:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.17x, 7.42us per byte, 134836.34 bytes per second
+   decrypt 128 byte packets ... 0.18x, 7.51us per byte, 133087.53 bytes per second
+   encrypt  16 byte packets ... 0.21x, 22.48us per byte, 44478.26 bytes per second
+   decrypt  16 byte packets ... 0.22x, 22.68us per byte, 44094.26 bytes per second
+   average ... 0.19x
+
+GIFT-COFB-Masked:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.01x, 164.80us per byte, 6068.05 bytes per second
+   decrypt 128 byte packets ... 0.01x, 164.91us per byte, 6064.09 bytes per second
+   encrypt  16 byte packets ... 0.01x, 403.80us per byte, 2476.46 bytes per second
+   decrypt  16 byte packets ... 0.01x, 404.01us per byte, 2475.19 bytes per second
+   average ... 0.01x
+
+TinyJAMBU-128-Masked:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.01x, 130.66us per byte, 7653.43 bytes per second
+   decrypt 128 byte packets ... 0.01x, 130.76us per byte, 7647.44 bytes per second
+   encrypt  16 byte packets ... 0.02x, 248.86us per byte, 4018.36 bytes per second
+   decrypt  16 byte packets ... 0.02x, 249.02us per byte, 4015.68 bytes per second
+   average ... 0.01x
+
+TinyJAMBU-192-Masked:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.01x, 145.97us per byte, 6850.51 bytes per second
+   decrypt 128 byte packets ... 0.01x, 146.08us per byte, 6845.72 bytes per second
+   encrypt  16 byte packets ... 0.02x, 272.26us per byte, 3672.94 bytes per second
+   decrypt  16 byte packets ... 0.02x, 272.43us per byte, 3670.73 bytes per second
+   average ... 0.01x
+
+TinyJAMBU-256-Masked:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.01x, 161.20us per byte, 6203.51 bytes per second
+   decrypt 128 byte packets ... 0.01x, 161.30us per byte, 6199.57 bytes per second
+   encrypt  16 byte packets ... 0.02x, 293.26us per byte, 3409.92 bytes per second
+   decrypt  16 byte packets ... 0.02x, 293.42us per byte, 3408.05 bytes per second
+   average ... 0.01x
+
+Xoodyak-Masked:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.01x, 125.66us per byte, 7958.15 bytes per second
+   decrypt 128 byte packets ... 0.01x, 125.77us per byte, 7951.29 bytes per second
+   encrypt  16 byte packets ... 0.01x, 382.25us per byte, 2616.07 bytes per second
+   decrypt  16 byte packets ... 0.01x, 382.46us per byte, 2614.64 bytes per second
+   average ... 0.01x
+
+ASCON-HASH:
+   sanity check ... ok
+   hash 1024 bytes ... 0.44x, 1.96us per byte, 509940.34 bytes per second
+   hash  128 bytes ... 0.35x, 2.50us per byte, 399889.09 bytes per second
+   hash   16 bytes ... 0.53x, 6.82us per byte, 146666.20 bytes per second
+   average ... 0.44x
+
+ASCON-HASHA:
+   sanity check ... ok
+   hash 1024 bytes ... 0.60x, 1.43us per byte, 699947.44 bytes per second
+   hash  128 bytes ... 0.44x, 2.00us per byte, 498851.75 bytes per second
+   hash   16 bytes ... 0.54x, 6.61us per byte, 151238.73 bytes per second
+   average ... 0.53x
+
+Esch256:
+   sanity check ... ok
+   hash 1024 bytes ... 0.87x, 0.99us per byte, 1007320.81 bytes per second
+   hash  128 bytes ... 0.76x, 1.17us per byte, 858072.75 bytes per second
+   hash   16 bytes ... 1.42x, 2.54us per byte, 393855.84 bytes per second
+   average ... 1.01x
+
+Esch384:
+   sanity check ... ok
+   hash 1024 bytes ... 0.47x, 1.84us per byte, 543958.69 bytes per second
+   hash  128 bytes ... 0.38x, 2.32us per byte, 430428.25 bytes per second
+   hash   16 bytes ... 0.58x, 6.19us per byte, 161430.67 bytes per second
+   average ... 0.48x
+
+PHOTON-Beetle-HASH:
+   sanity check ... ok
+   hash 1024 bytes ... 0.02x, 46.72us per byte, 21405.64 bytes per second
+   hash  128 bytes ... 0.02x, 44.16us per byte, 22647.36 bytes per second
+   hash   16 bytes ... 0.15x, 23.72us per byte, 42151.32 bytes per second
+   average ... 0.06x
+
+Romulus-H:
+   sanity check ... ok
+   hash 1024 bytes ... 0.10x, 8.22us per byte, 121653.13 bytes per second
+   hash  128 bytes ... 0.09x, 10.00us per byte, 100010.80 bytes per second
+   hash   16 bytes ... 0.22x, 16.26us per byte, 61516.81 bytes per second
+   average ... 0.14x
+
+Xoodyak-Hash:
+   sanity check ... ok
+   hash 1024 bytes ... 0.74x, 1.17us per byte, 855756.56 bytes per second
+   hash  128 bytes ... 0.67x, 1.31us per byte, 762302.94 bytes per second
+   hash   16 bytes ... 1.47x, 2.46us per byte, 407246.44 bytes per second
+   average ... 0.96x
+
+AES-128-GCM:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.30x, 4.16us per byte, 240634.08 bytes per second
+   decrypt 128 byte packets ... 0.31x, 4.24us per byte, 235677.95 bytes per second
+   encrypt  16 byte packets ... 0.47x, 9.90us per byte, 101000.11 bytes per second
+   decrypt  16 byte packets ... 0.48x, 10.11us per byte, 98936.43 bytes per second
+   average ... 0.39x
+
+AES-192-GCM:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.27x, 4.55us per byte, 219871.95 bytes per second
+   decrypt 128 byte packets ... 0.29x, 4.64us per byte, 215725.73 bytes per second
+   encrypt  16 byte packets ... 0.43x, 10.82us per byte, 92423.40 bytes per second
+   decrypt  16 byte packets ... 0.44x, 11.03us per byte, 90693.35 bytes per second
+   average ... 0.35x
+
+AES-256-GCM:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.25x, 4.97us per byte, 201343.66 bytes per second
+   decrypt 128 byte packets ... 0.26x, 5.05us per byte, 197862.16 bytes per second
+   encrypt  16 byte packets ... 0.39x, 12.00us per byte, 83300.07 bytes per second
+   decrypt  16 byte packets ... 0.40x, 12.21us per byte, 81893.94 bytes per second
+   average ... 0.32x
+
+SHA256:
+   hash 1024 bytes ... 1.22x, 0.71us per byte, 1410833.63 bytes per second
+   hash  128 bytes ... 0.86x, 1.02us per byte, 978582.06 bytes per second
+   hash   16 bytes ... 1.26x, 2.86us per byte, 349654.16 bytes per second
+   average ... 1.11x
+
+Dumbo:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.01x, 85.83us per byte, 11651.13 bytes per second
+   decrypt 128 byte packets ... 0.02x, 85.92us per byte, 11638.93 bytes per second
+   encrypt  16 byte packets ... 0.03x, 171.11us per byte, 5844.06 bytes per second
+   decrypt  16 byte packets ... 0.03x, 171.28us per byte, 5838.27 bytes per second
+   average ... 0.02x
+
+Jumbo:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.01x, 92.66us per byte, 10792.39 bytes per second
+   decrypt 128 byte packets ... 0.01x, 92.76us per byte, 10781.02 bytes per second
+   encrypt  16 byte packets ... 0.02x, 211.22us per byte, 4734.50 bytes per second
+   decrypt  16 byte packets ... 0.02x, 211.43us per byte, 4729.65 bytes per second
+   average ... 0.02x
+
+ISAP-A-128A:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.14x, 8.72us per byte, 114657.33 bytes per second
+   decrypt 128 byte packets ... 0.15x, 8.82us per byte, 113385.72 bytes per second
+   encrypt  16 byte packets ... 0.10x, 48.58us per byte, 20583.98 bytes per second
+   decrypt  16 byte packets ... 0.10x, 48.78us per byte, 20500.21 bytes per second
+   average ... 0.11x
+
+ISAP-A-128:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.04x, 32.81us per byte, 30474.45 bytes per second
+   decrypt 128 byte packets ... 0.04x, 32.91us per byte, 30383.59 bytes per second
+   encrypt  16 byte packets ... 0.02x, 235.63us per byte, 4244.02 bytes per second
+   decrypt  16 byte packets ... 0.02x, 235.83us per byte, 4240.41 bytes per second
+   average ... 0.03x
+
+ISAP-K-128A:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.05x, 22.34us per byte, 44752.90 bytes per second
+   decrypt 128 byte packets ... 0.06x, 22.44us per byte, 44557.07 bytes per second
+   encrypt  16 byte packets ... 0.04x, 124.58us per byte, 8027.00 bytes per second
+   decrypt  16 byte packets ... 0.04x, 124.78us per byte, 8014.24 bytes per second
+   average ... 0.04x
+
+ISAP-K-128:
+   sanity check ... ok
+   encrypt 128 byte packets ... 0.01x, 134.36us per byte, 7442.52 bytes per second
+   decrypt 128 byte packets ... 0.01x, 134.46us per byte, 7437.08 bytes per second
+   encrypt  16 byte packets ... 0.0047x, 1003.34us per byte, 996.68 bytes per second
+   decrypt  16 byte packets ... 0.0049x, 1003.54us per byte, 996.48 bytes per second
+   average ... 0.01x
+
+ASCON-128:
+   encrypt 128 byte packets ... 1.62us per byte, 615769.50 bytes per second
+   decrypt 128 byte packets ... 1.70us per byte, 588370.50 bytes per second
+   encrypt  16 byte packets ... 4.37us per byte, 228985.78 bytes per second
+   decrypt  16 byte packets ... 4.50us per byte, 222335.45 bytes per second
+
+[4] ASCON-128-Masked:
+   encrypt 128 byte packets ... 0.22x, 7.41us per byte, 134880.23 bytes per second
+   decrypt 128 byte packets ... 0.23x, 7.51us per byte, 133118.41 bytes per second
+   encrypt  16 byte packets ... 0.19x, 22.46us per byte, 44521.12 bytes per second
+   decrypt  16 byte packets ... 0.20x, 22.66us per byte, 44126.16 bytes per second
+   average ... 0.21x = 1 / 4.79x
+
+ASCON-128a:
+   encrypt 128 byte packets ... 1.30us per byte, 771874.81 bytes per second
+   decrypt 128 byte packets ... 1.39us per byte, 721736.69 bytes per second
+   encrypt  16 byte packets ... 4.15us per byte, 240927.58 bytes per second
+   decrypt  16 byte packets ... 4.29us per byte, 233292.83 bytes per second
+
+[4] ASCON-128a-Masked:
+   encrypt 128 byte packets ... 0.22x, 5.97us per byte, 167550.23 bytes per second
+   decrypt 128 byte packets ... 0.23x, 6.07us per byte, 164791.31 bytes per second
+   encrypt  16 byte packets ... 0.20x, 21.17us per byte, 47237.12 bytes per second
+   decrypt  16 byte packets ... 0.20x, 21.38us per byte, 46776.79 bytes per second
+   average ... 0.21x = 1 / 4.79x
+
+ASCON-80pq:
+   encrypt 128 byte packets ... 1.64us per byte, 611474.69 bytes per second
+   decrypt 128 byte packets ... 1.71us per byte, 585678.31 bytes per second
+   encrypt  16 byte packets ... 4.46us per byte, 224299.06 bytes per second
+   decrypt  16 byte packets ... 4.56us per byte, 219288.23 bytes per second
+
+[4] ASCON-80pq-Masked:
+   encrypt 128 byte packets ... 0.22x, 7.42us per byte, 134826.25 bytes per second
+   decrypt 128 byte packets ... 0.23x, 7.51us per byte, 133075.50 bytes per second
+   encrypt  16 byte packets ... 0.20x, 22.48us per byte, 44474.92 bytes per second
+   decrypt  16 byte packets ... 0.20x, 22.68us per byte, 44091.71 bytes per second
+   average ... 0.21x = 1 / 4.74x
+
+GIFT-COFB:
+   encrypt 128 byte packets ... 1.99us per byte, 501449.50 bytes per second
+   decrypt 128 byte packets ... 2.10us per byte, 476527.31 bytes per second
+   encrypt  16 byte packets ... 5.89us per byte, 169905.48 bytes per second
+   decrypt  16 byte packets ... 6.09us per byte, 164282.30 bytes per second
+
+[4] GIFT-COFB-Masked:
+   encrypt 128 byte packets ... 0.01x, 164.80us per byte, 6068.00 bytes per second
+   decrypt 128 byte packets ... 0.01x, 164.91us per byte, 6064.07 bytes per second
+   encrypt  16 byte packets ... 0.01x, 403.80us per byte, 2476.46 bytes per second
+   decrypt  16 byte packets ... 0.02x, 404.01us per byte, 2475.18 bytes per second
+   average ... 0.01x = 1 / 73.71x
+
+TinyJAMBU-128:
+   encrypt 128 byte packets ... 1.54us per byte, 648396.75 bytes per second
+   decrypt 128 byte packets ... 1.62us per byte, 618566.69 bytes per second
+   encrypt  16 byte packets ... 2.98us per byte, 335570.47 bytes per second
+   decrypt  16 byte packets ... 3.14us per byte, 318809.78 bytes per second
+
+[4] TinyJAMBU-128-Masked:
+   encrypt 128 byte packets ... 0.01x, 130.66us per byte, 7653.37 bytes per second
+   decrypt 128 byte packets ... 0.01x, 130.76us per byte, 7647.42 bytes per second
+   encrypt  16 byte packets ... 0.01x, 248.86us per byte, 4018.36 bytes per second
+   decrypt  16 byte packets ... 0.01x, 249.02us per byte, 4015.66 bytes per second
+   average ... 0.01x = 1 / 82.19x
+
+TinyJAMBU-192:
+   encrypt 128 byte packets ... 2.66us per byte, 376404.16 bytes per second
+   decrypt 128 byte packets ... 2.77us per byte, 360786.97 bytes per second
+   encrypt  16 byte packets ... 5.03us per byte, 198807.16 bytes per second
+   decrypt  16 byte packets ... 5.22us per byte, 191555.59 bytes per second
+
+[4] TinyJAMBU-192-Masked:
+   encrypt 128 byte packets ... 0.02x, 145.98us per byte, 6850.49 bytes per second
+   decrypt 128 byte packets ... 0.02x, 146.08us per byte, 6845.69 bytes per second
+   encrypt  16 byte packets ... 0.02x, 272.26us per byte, 3672.91 bytes per second
+   decrypt  16 byte packets ... 0.02x, 272.43us per byte, 3670.72 bytes per second
+   average ... 0.02x = 1 / 53.53x
+
+TinyJAMBU-256:
+   encrypt 128 byte packets ... 2.97us per byte, 337134.88 bytes per second
+   decrypt 128 byte packets ... 3.06us per byte, 326822.41 bytes per second
+   encrypt  16 byte packets ... 5.46us per byte, 183129.22 bytes per second
+   decrypt  16 byte packets ... 5.63us per byte, 177777.78 bytes per second
+
+[4] TinyJAMBU-256-Masked:
+   encrypt 128 byte packets ... 0.02x, 161.20us per byte, 6203.49 bytes per second
+   decrypt 128 byte packets ... 0.02x, 161.30us per byte, 6199.57 bytes per second
+   encrypt  16 byte packets ... 0.02x, 293.26us per byte, 3409.89 bytes per second
+   decrypt  16 byte packets ... 0.02x, 293.42us per byte, 3408.03 bytes per second
+   average ... 0.02x = 1 / 53.28x
+
+Xoodyak:
+   encrypt 128 byte packets ... 1.17us per byte, 855672.19 bytes per second
+   decrypt 128 byte packets ... 1.25us per byte, 798353.38 bytes per second
+   encrypt  16 byte packets ... 3.43us per byte, 291704.66 bytes per second
+   decrypt  16 byte packets ... 3.59us per byte, 278196.38 bytes per second
+
+[4] Xoodyak-Masked:
+   encrypt 128 byte packets ... 0.01x, 125.66us per byte, 7958.09 bytes per second
+   decrypt 128 byte packets ... 0.01x, 125.77us per byte, 7951.27 bytes per second
+   encrypt  16 byte packets ... 0.01x, 382.25us per byte, 2616.06 bytes per second
+   decrypt  16 byte packets ... 0.01x, 382.46us per byte, 2614.63 bytes per second
+   average ... 0.01x = 1 / 106.47x
+

@@ -1,0 +1,9 @@
+
+Test Vectors:
+AES-128-CTR #1 ... Passed
+AES-128-CTR #2 ... Passed
+AES-128-CTR #3 ... Passed
+
+Performance Tests:
+AES-128-CTR Encrypt ... 4.93us per byte, 202749.80 bytes per second
+AES-128-CTR Decrypt ... 4.93us per byte, 202693.28 bytes per second

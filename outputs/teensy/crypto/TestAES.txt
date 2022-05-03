@@ -1,0 +1,16 @@
+AES128 ... 188
+AES192 ... 220
+AES256 ... 252
+
+Test Vectors:
+AES-128-ECB Encryption ... Passed
+AES-128-ECB Decryption ... Passed
+AES-192-ECB Encryption ... Passed
+AES-192-ECB Decryption ... Passed
+AES-256-ECB Encryption ... Passed
+AES-256-ECB Decryption ... Passed
+
+Performance Tests:
+AES-128-ECB Set Key ... 23.39us per operation, 42757.15 per second
+AES-128-ECB Encrypt ... 4.61us per byte, 216795.70 bytes per second
+AES-128-ECB Decrypt ...

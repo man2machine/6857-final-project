@@ -1,0 +1,43 @@
+
+State Sizes:
+GCM<AES128> ... 312
+GCM<AES192> ... 344
+GCM<AES256> ... 376
+GCM<Speck> ... 408
+GCM<SpeckTiny> ... 168
+
+Test Vectors:
+AES-128 GCM #1 ... Passed
+AES-128 GCM #2 ... Passed
+AES-128 GCM #3 ... Passed
+AES-128 GCM #4 ... Passed
+AES-128 GCM #5 ... Passed
+AES-192 GCM #10 ... Passed
+AES-256 GCM #16 ... Passed
+
+Performance Tests:
+AES-128 GCM #1 SetKey ... 172.66us per operation, 5791.63 per second
+AES-128 GCM #1 Encrypt ... 6.97us per byte, 143416.72 bytes per second
+AES-128 GCM #1 Decrypt ... 6.96us per byte, 143733.34 bytes per second
+AES-128 GCM #1 AddAuthData ... 2.27us per byte, 441382.34 bytes per second
+AES-128 GCM #1 ComputeTag ... 42.19us per operation, 23705.11 per second
+AES-192 GCM #10 SetKey ... 207.07us per operation, 4829.19 per second
+AES-192 GCM #10 Encrypt ... 7.98us per byte, 125345.92 bytes per second
+AES-192 GCM #10 Decrypt ... 7.96us per byte, 125576.87 bytes per second
+AES-192 GCM #10 AddAuthData ... 2.27us per byte, 441382.34 bytes per second
+AES-192 GCM #10 ComputeTag ... 42.18us per operation, 23705.67 per second
+AES-256 GCM #16 SetKey ... 244.97us per operation, 4082.07 per second
+AES-256 GCM #16 Encrypt ... 8.92us per byte, 112126.67 bytes per second
+AES-256 GCM #16 Decrypt ... 8.90us per byte, 112311.05 bytes per second
+AES-256 GCM #16 AddAuthData ... 2.27us per byte, 441446.28 bytes per second
+AES-256 GCM #16 ComputeTag ... 42.18us per operation, 23706.79 per second
+GCM-Speck-256 SetKey ... 50.45us per operation, 19821.21 per second
+GCM-Speck-256 Encrypt ... 3.05us per byte, 327905.81 bytes per second
+GCM-Speck-256 Decrypt ... 3.03us per byte, 329798.31 bytes per second
+GCM-Speck-256 AddAuthData ... 2.27us per byte, 441434.09 bytes per second
+GCM-Speck-256 ComputeTag ... 42.19us per operation, 23703.98 per second
+GCM-SpeckTiny-256 SetKey ... 65.57us per operation, 15250.88 per second
+GCM-SpeckTiny-256 Encrypt ... 4.22us per byte, 237054.59 bytes per second
+GCM-SpeckTiny-256 Decrypt ... 4.20us per byte, 238047.42 bytes per second
+GCM-SpeckTiny-256 AddAuthData ... 2.27us per byte, 441382.34 bytes per second
+GCM-SpeckTiny-256 ComputeTag ... 42.18us per operation, 23706.23 per second

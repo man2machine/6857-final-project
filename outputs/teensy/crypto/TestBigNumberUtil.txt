@@ -1,0 +1,9 @@
+pack 0: ok
+pack 1: ok
+pack 2: ok
+pack 4: ok
+pack 5: ok
+pack 128: ok
+pack 256: ok
+pack 18446744073709551609: ok
+pack 680564733841876926926749214863536422907:

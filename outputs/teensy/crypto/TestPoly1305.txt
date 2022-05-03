@@ -1,0 +1,13 @@
+
+State Size ...60
+
+Test Vectors:
+Poly1305 #1 ... Passed
+Poly1305 #2 ... Passed
+Poly1305 #3 ... Passed
+Poly1305 #4 ... Passed
+
+Performance Tests:
+Hashing ... 0.44us per byte, 2247625.00 bytes per second
+Set Key ... 2.76us per op, 362844.69 ops per second
+Finalize ... 11.69us per op, 85521.25 ops per second

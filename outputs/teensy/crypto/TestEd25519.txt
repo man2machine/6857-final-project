@@ -1,0 +1,7 @@
+Ed25519 #1 sign ... ok (elapsed 88942 us)
+Ed25519 #1 verify ... ok (elapsed 138270 us)
+Ed25519 #1 derive public key ... ok (elapsed 88160 us)
+Ed25519 #2 sign ... ok (elapsed 88946 us)
+Ed25519 #2 verify ... ok (elapsed 137584 us)
+Ed25519 #2 derive public key ... ok (elapsed 88160 us)
+

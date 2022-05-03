@@ -1,0 +1,17 @@
+
+State Size ...224
+
+Test Vectors:
+SHA-512 #1 ... Passed
+SHA-512 #2 ... Passed
+SHA-512 #3 ... Passed
+HMAC-SHA-512 keysize=0 ... Passed
+HMAC-SHA-512 keysize=1 ... Passed
+HMAC-SHA-512 keysize=64 ... Passed
+HMAC-SHA-512 keysize=128 ... Passed
+HMAC-SHA-512 keysize=129 ... Passed
+HMAC-SHA-512 keysize=130 ... Passed
+
+Performance Tests:
+Hashing ... 2.35us per byte, 424653.44 bytes per second
+Finalizing ... 302.59us per op, 3304.85 ops per second

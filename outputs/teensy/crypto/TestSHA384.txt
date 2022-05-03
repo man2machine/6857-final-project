@@ -1,0 +1,17 @@
+
+State Size ...224
+
+Test Vectors:
+SHA-384 #1 ... Passed
+SHA-384 #2 ... Passed
+SHA-384 #3 ... Passed
+HMAC-SHA-384 keysize=0 ... Passed
+HMAC-SHA-384 keysize=1 ... Passed
+HMAC-SHA-384 keysize=48 ... Passed
+HMAC-SHA-384 keysize=128 ... Passed
+HMAC-SHA-384 keysize=129 ... Passed
+HMAC-SHA-384 keysize=130 ... Passed
+
+Performance Tests:
+Hashing ... 2.36us per byte, 424620.13 bytes per second
+Finalizing ... 302.51us per op, 3305.73 ops per second

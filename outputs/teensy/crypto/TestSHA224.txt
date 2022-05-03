@@ -1,0 +1,20 @@
+
+State Size ...120
+
+Test Vectors:
+SHA-224 #1 ... Passed
+SHA-224 #2 ... Passed
+HMAC-SHA-224 #1 ... Passed
+HMAC-SHA-224 #2 ... Passed
+HMAC-SHA-224 keysize=0 ... Passed
+HMAC-SHA-224 keysize=1 ... Passed
+HMAC-SHA-224 keysize=28 ... Passed
+HMAC-SHA-224 keysize=64 ... Passed
+HMAC-SHA-224 keysize=65 ... Passed
+HMAC-SHA-224 keysize=128 ... Passed
+
+Performance Tests:
+Hashing ... 0.76us per byte, 1307456.63 bytes per second
+Finalizing ... 51.37us per op, 19465.10 ops per second
+HMAC Reset ... 54.13us per op, 18475.41 ops per second
+HMAC Finalize ...

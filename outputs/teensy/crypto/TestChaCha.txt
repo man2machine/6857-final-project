@@ -1,0 +1,15 @@
+
+State Size ...136
+
+Test Vectors:
+ChaCha20 128-bit ... Passed
+ChaCha20 256-bit ... Passed
+ChaCha12 128-bit ... Passed
+ChaCha12 256-bit ... Passed
+ChaCha8 128-bit ... Passed
+ChaCha8 256-bit ... Passed
+
+Performance Tests:
+ChaCha20 128-bit SetKey ... 5.05us per operation, 197823.94 per second
+ChaCha20 128-bit Encrypt ... 0.58us per byte, 1733008.38 bytes per second
+ChaCha20 128-bit Decrypt ...
