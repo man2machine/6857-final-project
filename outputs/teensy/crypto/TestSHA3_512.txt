@@ -11,4 +11,4 @@ HMAC-SHA3-512 keysize=0 ... Passed
 HMAC-SHA3-512 keysize=1 ... Passed
 HMAC-SHA3-512 keysize=64 ... Passed
 HMAC-SHA3-512 keysize=72 ... Passed
-HMAC-SHA3-512 keysize=73 ...
+HMAC-SHA3-512 keysize=73 ... 484.34us per op, 2064.67 ops per second

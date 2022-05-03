@@ -11,4 +11,9 @@ HMAC-SHA3-256 keysize=0 ... Passed
 HMAC-SHA3-256 keysize=1 ... Passed
 HMAC-SHA3-256 keysize=32 ... Passed
 HMAC-SHA3-256 keysize=136 ... Passed
-HMAC-SHA3-256 keysize=137 ...
+HMAC-SHA3-256 keysize=137 ... Passed
+HMAC-SHA3-256 keysize=138 ... Passed
+
+Performance Tests:
+Hashing ... 3.65us per byte, 274272.00 bytes per second
+Finalizing ... 483.99us per op, 2066.15 ops per second

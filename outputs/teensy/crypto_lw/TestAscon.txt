@@ -10,6 +10,7 @@ Ascon128 #5 ... Passed
 
 Performance Tests:
 Ascon128 #4 SetKey ... 42.80us per operation, 23366.12 per second
-Ascon128 #4 Encrypt ... 2.75us per byte, 364052.13 bytes per second
-Ascon128 #4 Decrypt ... 2.75us per byte, 363493.84 bytes per second
-Ascon128 #4 AddAuthData ...
+Ascon128 #4 Encrypt ... 2.75us per byte, 364054.19 bytes per second
+Ascon128 #4 Decrypt ... 2.75us per byte, 363495.94 bytes per second
+Ascon128 #4 AddAuthData ... 2.68us per byte, 372691.06 bytes per second
+Ascon128 #4 ComputeTag ... 41.76us per operation, 23946.93 per second

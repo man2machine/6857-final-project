@@ -10,6 +10,21 @@ ChaCha8 128-bit ... Passed
 ChaCha8 256-bit ... Passed
 
 Performance Tests:
-ChaCha20 128-bit SetKey ... 5.05us per operation, 197823.94 per second
-ChaCha20 128-bit Encrypt ... 0.58us per byte, 1733008.38 bytes per second
-ChaCha20 128-bit Decrypt ...
+ChaCha20 128-bit SetKey ... 5.06us per operation, 197589.41 per second
+ChaCha20 128-bit Encrypt ... 0.58us per byte, 1732164.13 bytes per second
+ChaCha20 128-bit Decrypt ... 0.58us per byte, 1726416.88 bytes per second
+ChaCha20 256-bit SetKey ... 4.77us per operation, 209687.56 per second
+ChaCha20 256-bit Encrypt ... 0.58us per byte, 1732117.25 bytes per second
+ChaCha20 256-bit Decrypt ... 0.58us per byte, 1726463.50 bytes per second
+ChaCha12 128-bit SetKey ... 5.06us per operation, 197589.41 per second
+ChaCha12 128-bit Encrypt ... 0.45us per byte, 2238153.50 bytes per second
+ChaCha12 128-bit Decrypt ... 0.45us per byte, 2228489.75 bytes per second
+ChaCha12 256-bit SetKey ... 4.76us per operation, 209907.64 per second
+ChaCha12 256-bit Encrypt ... 0.45us per byte, 2238153.50 bytes per second
+ChaCha12 256-bit Decrypt ... 0.45us per byte, 2228334.75 bytes per second
+ChaCha8 128-bit SetKey ... 5.06us per operation, 197589.41 per second
+ChaCha8 128-bit Encrypt ... 0.38us per byte, 2620802.50 bytes per second
+ChaCha8 128-bit Decrypt ... 0.38us per byte, 2607243.25 bytes per second
+ChaCha8 256-bit SetKey ... 4.77us per operation, 209643.61 per second
+ChaCha8 256-bit Encrypt ... 0.38us per byte, 2620695.25 bytes per second
+ChaCha8 256-bit Decrypt ... 0.38us per byte, 2607137.00 bytes per second
