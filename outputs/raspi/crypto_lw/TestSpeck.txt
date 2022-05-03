@@ -1,0 +1,63 @@
+
+State Sizes:
+Speck ... 288
+SpeckSmall ... 80
+SpeckTiny ... 48
+
+Speck Test Vectors:
+Speck-128-ECB Encryption ... Passed
+Speck-128-ECB Decryption ... Passed
+Speck-192-ECB Encryption ... Passed
+Speck-192-ECB Decryption ... Passed
+Speck-256-ECB Encryption ... Passed
+Speck-256-ECB Decryption ... Passed
+
+SpeckSmall Test Vectors:
+Speck-128-ECB Encryption ... Passed
+Speck-128-ECB Decryption ... Passed
+Speck-192-ECB Encryption ... Passed
+Speck-192-ECB Decryption ... Passed
+Speck-256-ECB Encryption ... Passed
+Speck-256-ECB Decryption ... Passed
+
+SpeckTiny Test Vectors:
+Speck-128-ECB Encryption ... Passed
+Speck-192-ECB Encryption ... Passed
+Speck-256-ECB Encryption ... Passed
+
+Speck Performance Tests:
+Speck-128-ECB Set Key ... 10.03us per operation, 99744.65 per second
+Speck-128-ECB Encrypt ... 0.34us per byte, 2966588.79 bytes per second
+Speck-128-ECB Decrypt ... 0.33us per byte, 3001087.89 bytes per second
+
+Speck-192-ECB Set Key ... 10.49us per operation, 95299.81 per second
+Speck-192-ECB Encrypt ... 0.35us per byte, 2892995.34 bytes per second
+Speck-192-ECB Decrypt ... 0.35us per byte, 2875835.79 bytes per second
+
+Speck-256-ECB Set Key ... 10.94us per operation, 91419.38 per second
+Speck-256-ECB Encrypt ... 0.35us per byte, 2821670.43 bytes per second
+Speck-256-ECB Decrypt ... 0.35us per byte, 2872015.80 bytes per second
+
+SpeckSmall Performance Tests:
+Speck-128-ECB Set Key ... 7.18us per operation, 139262.19 per second
+Speck-128-ECB Encrypt ... 0.73us per byte, 1370684.49 bytes per second
+Speck-128-ECB Decrypt ... 0.70us per byte, 1432433.88 bytes per second
+
+Speck-192-ECB Set Key ... 7.13us per operation, 140156.13 per second
+Speck-192-ECB Encrypt ... 0.74us per byte, 1352905.36 bytes per second
+Speck-192-ECB Decrypt ... 0.72us per byte, 1389516.10 bytes per second
+
+Speck-256-ECB Set Key ... 7.61us per operation, 131399.14 per second
+Speck-256-ECB Encrypt ... 0.75us per byte, 1326106.06 bytes per second
+Speck-256-ECB Decrypt ... 0.75us per byte, 1339786.64 bytes per second
+
+SpeckTiny Performance Tests:
+Speck-128-ECB Set Key ... 0.60us per operation, 1676445.93 per second
+Speck-128-ECB Encrypt ... 0.72us per byte, 1389154.18 bytes per second
+
+Speck-192-ECB Set Key ... 0.90us per operation, 1109631.60 per second
+Speck-192-ECB Encrypt ... 0.73us per byte, 1363628.62 bytes per second
+
+Speck-256-ECB Set Key ... 1.24us per operation, 805282.65 per second
+Speck-256-ECB Encrypt ... 0.75us per byte, 1324788.45 bytes per second
+

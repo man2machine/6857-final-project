@@ -15,6 +15,6 @@ HMAC-BLAKE2b keysize=130 ... Passed
 BLAKE2b RFC 7693 ... Passed
 
 Performance Tests:
-Hashing ... 0.71us per byte, 1405329.44 bytes per second
-Keyed Reset ... 92.19us per op, 10847.52 ops per second
-Finalizing ... 83.12us per op, 12030.36 ops per second
+Hashing ... 0.34us per byte, 2978031.29 bytes per second
+Keyed Reset ... 43.19us per op, 23152.44 ops per second
+Finalizing ... 43.33us per op, 23081.36 ops per second

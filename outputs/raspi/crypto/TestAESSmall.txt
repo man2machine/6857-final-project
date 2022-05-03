@@ -1,0 +1,20 @@
+
+State Sizes:
+AESSmall128 ... 36
+AESSmall256 ... 68
+
+Test Vectors:
+AES-128-ECB Encryption ... Passed
+AES-128-ECB Decryption ... Passed
+AES-256-ECB Encryption ... Passed
+AES-256-ECB Decryption ... Passed
+
+Performance Tests:
+AES-128-ECB Set Key ... 7.40us per operation, 135067.60 per second
+AES-128-ECB Encrypt ... 2.16us per byte, 463416.19 bytes per second
+AES-128-ECB Decrypt ... 3.41us per byte, 293469.21 bytes per second
+
+AES-256-ECB Set Key ... 9.39us per operation, 106522.36 per second
+AES-256-ECB Encrypt ... 3.06us per byte, 327217.10 bytes per second
+AES-256-ECB Decrypt ... 5.02us per byte, 199355.09 bytes per second
+

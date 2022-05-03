@@ -25,4 +25,5 @@ for raspi_test_fname in raspi_test_fnames:
         get_rel_pkg_path("outputs/raspi/"), test_type_dir, test_exec_name)
     os.makedirs(output_fname.rpartition(os.path.sep)[0], exist_ok=True)
     cmd = "{} > {}.txt".format(raspi_test_exec_fname, output_fname)
+    print("Running {}".format(test_exec_name))
     proc = subprocess.run([cmd], shell=True)

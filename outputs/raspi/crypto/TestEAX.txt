@@ -1,0 +1,43 @@
+
+State Sizes:
+EAX<AES128> ... 284
+EAX<AES256> ... 348
+EAX<Speck> ... 384
+EAX<SpeckTiny> ... 144
+
+Test Vectors:
+EAX #1 ... Passed
+EAX #2 ... Passed
+EAX #3 ... Passed
+EAX #4 ... Passed
+EAX #5 ... Passed
+EAX #6 ... Passed
+EAX #7 ... Passed
+EAX #8 ... Passed
+EAX #9 ... Passed
+EAX #10 ... Passed
+
+Performance Tests:
+AES-128 EAX #1 SetKey ... 76.58us per operation, 13058.92 per second
+AES-128 EAX #1 Encrypt ... 4.14us per byte, 241271.80 bytes per second
+AES-128 EAX #1 Decrypt ... 4.15us per byte, 241223.61 bytes per second
+AES-128 EAX #1 AddAuthData ... 2.03us per byte, 492076.79 bytes per second
+AES-128 EAX #1 ComputeTag ... 33.37us per operation, 29970.63 per second
+
+AES-256 EAX #1 SetKey ... 121.27us per operation, 8245.86 per second
+AES-256 EAX #1 Encrypt ... 5.88us per byte, 170212.31 bytes per second
+AES-256 EAX #1 Decrypt ... 5.75us per byte, 173820.94 bytes per second
+AES-256 EAX #1 AddAuthData ... 2.85us per byte, 351424.37 bytes per second
+AES-256 EAX #1 ComputeTag ... 47.06us per operation, 21248.11 per second
+
+Speck EAX #1 SetKey ... 26.45us per operation, 37810.04 per second
+Speck EAX #1 Encrypt ... 0.96us per byte, 1046658.05 bytes per second
+Speck EAX #1 Decrypt ... 0.96us per byte, 1046966.25 bytes per second
+Speck EAX #1 AddAuthData ... 0.45us per byte, 2245456.46 bytes per second
+Speck EAX #1 ComputeTag ... 7.84us per operation, 127583.57 per second
+
+SpeckTiny EAX #1 SetKey ... 29.81us per operation, 33544.66 per second
+SpeckTiny EAX #1 Encrypt ... 1.77us per byte, 565236.21 bytes per second
+SpeckTiny EAX #1 Decrypt ... 1.95us per byte, 512832.84 bytes per second
+SpeckTiny EAX #1 AddAuthData ... 0.85us per byte, 1180376.24 bytes per second
+SpeckTiny EAX #1 ComputeTag ... 14.61us per operation, 68469.70 per second

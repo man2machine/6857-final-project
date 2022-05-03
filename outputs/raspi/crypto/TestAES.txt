@@ -13,15 +13,15 @@ AES-256-ECB Encryption ... Passed
 AES-256-ECB Decryption ... Passed
 
 Performance Tests:
-AES-128-ECB Set Key ... 18.25us per operation, 54792.12 per second
-AES-128-ECB Encrypt ... 3.99us per byte, 250466.49 bytes per second
-AES-128-ECB Decrypt ... 6.43us per byte, 155501.35 bytes per second
+AES-128-ECB Set Key ... 8.99us per operation, 111177.82 per second
+AES-128-ECB Encrypt ... 2.11us per byte, 475014.25 bytes per second
+AES-128-ECB Decrypt ... 3.17us per byte, 314995.35 bytes per second
 
-AES-192-ECB Set Key ... 19.26us per operation, 51923.51 per second
-AES-192-ECB Encrypt ... 4.92us per byte, 203180.28 bytes per second
-AES-192-ECB Decrypt ... 7.74us per byte, 129183.95 bytes per second
+AES-192-ECB Set Key ... 9.53us per operation, 104899.87 per second
+AES-192-ECB Encrypt ... 2.35us per byte, 426071.30 bytes per second
+AES-192-ECB Decrypt ... 3.86us per byte, 259311.72 bytes per second
 
-AES-256-ECB Set Key ... 24.08us per operation, 41530.83 per second
-AES-256-ECB Encrypt ... 5.75us per byte, 173912.29 bytes per second
-AES-256-ECB Decrypt ... 9.26us per byte, 108003.46 bytes per second
+AES-256-ECB Set Key ... 11.64us per operation, 85920.25 per second
+AES-256-ECB Encrypt ... 2.75us per byte, 363662.81 bytes per second
+AES-256-ECB Decrypt ... 4.68us per byte, 213749.43 bytes per second
 

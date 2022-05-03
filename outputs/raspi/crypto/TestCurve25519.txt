@@ -1,0 +1,13 @@
+Fixed test vectors:
+Computing Alice's public key ... ok (elapsed 33960 us)
+Computing Bob's public key ... ok (elapsed 33879 us)
+Computing Alice's shared secret ... ok (elapsed 33680 us)
+Computing Bob's shared secret ... ok (elapsed 33378 us)
+
+Diffie-Hellman key exchange:
+Generate random k/f for Alice ... elapsed 34292 us
+Generate random k/f for Bob ... elapsed 33705 us
+Generate shared secret for Alice ... elapsed 33448 us
+Generate shared secret for Bob ... elapsed 34062 us
+Check that the shared secrets match ... ok
+

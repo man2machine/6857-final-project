@@ -14,7 +14,7 @@ HMAC-SHA-224 keysize=65 ... Passed
 HMAC-SHA-224 keysize=128 ... Passed
 
 Performance Tests:
-Hashing ... 1.05us per byte, 954938.82 bytes per second
-Finalizing ... 61.22us per op, 16335.87 ops per second
-HMAC Reset ... 52.80us per op, 18940.11 ops per second
-HMAC Finalize ... 172.46us per op, 5798.58 ops per second
+Hashing ... 0.42us per byte, 2356580.01 bytes per second
+Finalizing ... 26.81us per op, 37298.12 ops per second
+HMAC Reset ... 27.38us per op, 36520.34 ops per second
+HMAC Finalize ... 82.90us per op, 12062.00 ops per second

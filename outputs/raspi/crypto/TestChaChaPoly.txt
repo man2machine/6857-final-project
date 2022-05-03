@@ -6,7 +6,7 @@ ChaChaPoly #1 ... Passed
 ChaChaPoly #2 ... Passed
 
 Performance Tests:
-ChaChaPoly #1 SetKey ... 41.02us per operation, 24380.73 per second
-ChaChaPoly #1 Encrypt ... 1.21us per byte, 826926.80 bytes per second
-ChaChaPoly #1 Decrypt ... 1.67us per byte, 599144.35 bytes per second
-ChaChaPoly #1 AddAuthData ... 0.77us per byte, 1297253.47 bytes per second
+ChaChaPoly #1 SetKey ... 20.91us per operation, 47828.58 per second
+ChaChaPoly #1 Encrypt ... 0.61us per byte, 1637079.86 bytes per second
+ChaChaPoly #1 Decrypt ... 0.59us per byte, 1693793.83 bytes per second
+ChaChaPoly #1 AddAuthData ... 0.25us per byte, 4018838.30 bytes per second

@@ -1,0 +1,16 @@
+
+State Size ... 72
+
+Test Vectors:
+Ascon128 #1 ... Passed
+Ascon128 #2 ... Passed
+Ascon128 #3 ... Passed
+Ascon128 #4 ... Passed
+Ascon128 #5 ... Passed
+
+Performance Tests:
+Ascon128 #4 SetKey ... 15.37us per operation, 65078.75 per second
+Ascon128 #4 Encrypt ... 0.99us per byte, 1007905.76 bytes per second
+Ascon128 #4 Decrypt ... 0.98us per byte, 1015953.65 bytes per second
+Ascon128 #4 AddAuthData ... 0.97us per byte, 1030811.60 bytes per second
+Ascon128 #4 ComputeTag ... 14.62us per operation, 68394.77 per second
