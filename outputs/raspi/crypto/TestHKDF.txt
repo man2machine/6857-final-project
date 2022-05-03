@@ -1,0 +1,7 @@
+
+State Size ... 200
+Size Without Hash State ... 80
+
+Test Vectors:
+Test Vector 1 ... Passed
+

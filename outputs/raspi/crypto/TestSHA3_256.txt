@@ -1,0 +1,19 @@
+
+State Size ...224
+
+Test Vectors:
+SHA3-256 #1 ... Passed
+SHA3-256 #2 ... Passed
+SHA3-256 #3 ... Passed
+SHA3-256 #4 ... Passed
+SHA3-256 #5 ... Passed
+HMAC-SHA3-256 keysize=0 ... Passed
+HMAC-SHA3-256 keysize=1 ... Passed
+HMAC-SHA3-256 keysize=32 ... Passed
+HMAC-SHA3-256 keysize=136 ... Passed
+HMAC-SHA3-256 keysize=137 ... Passed
+HMAC-SHA3-256 keysize=138 ... Passed
+
+Performance Tests:
+Hashing ... 3.50us per byte, 285426.31 bytes per second
+Finalizing ... 417.48us per op, 2395.30 ops per second
