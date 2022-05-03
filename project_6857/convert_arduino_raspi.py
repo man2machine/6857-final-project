@@ -25,6 +25,7 @@ LOOP_FIND = r"void loop\(\)\s+{"
 LOOP_REPLACE = """void loop()
 {
     exit(0);"""
+EXCLUDE_FNAMES = ["TestRNG"]
 
 import os
 import glob
@@ -38,6 +39,13 @@ def get_raspi_convert_info():
     arduino_test_fnames = glob.glob(search_glob, recursive=True)
     test_infos = []
     for arduino_test_fname in arduino_test_fnames:
+        skip = False
+        for fname in EXCLUDE_FNAMES:
+            if fname in arduino_test_fname:
+                skip = True
+                break
+        if skip:
+            continue
         fname_split = arduino_test_fname.split(os.path.sep)
         test_type_dir = fname_split[-4]
         test_cpp_name = fname_split[-1].rpartition(".")[0] + ".cpp"
