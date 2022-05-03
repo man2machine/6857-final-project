@@ -26,8 +26,6 @@ LOOP_REPLACE = """void loop()
 {
     exit(0);"""
 EXCLUDE_FNAMES = ["TestRNG"]
-BAUDRATE_FIND = "Serial.begin(9600)"
-BAUDRATE_REPLACE = "Serial.begin(115200)"
 
 import os
 import glob
@@ -35,14 +33,10 @@ import re
 
 from project_6857.utils import get_rel_pkg_path
 
-def find_arduino_tests():
+def get_raspi_convert_info():
     search_glob = os.path.join(
         get_rel_pkg_path("external_arduino/"), "*", "tests", "*", "*.ino")
     arduino_test_fnames = glob.glob(search_glob, recursive=True)
-    return arduino_test_fnames
-
-def get_raspi_convert_info():
-    arduino_test_fnames = find_arduino_tests()
     test_infos = []
     for arduino_test_fname in arduino_test_fnames:
         skip = False
@@ -83,17 +77,3 @@ def convert_all_raspi():
     info = get_raspi_convert_info()
     for test_pair in info:
         convert_arduino_to_raspi(*test_pair)
-
-def update_arduino_test_baud(arduino_test_fname):
-    with open(arduino_test_fname, 'r') as f: 
-        arduino_file_data = f.read()
-    
-    arduino_file_data = arduino_file_data.replace(BAUDRATE_FIND, BAUDRATE_REPLACE)
-    
-    with open(arduino_test_fname, 'w') as f: 
-        f.write(arduino_file_data)
-
-def update_all_ardiuno():
-    fnames = find_arduino_tests()
-    for fname in fnames:
-        update_arduino_test_baud(fname)

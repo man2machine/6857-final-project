@@ -375,7 +375,7 @@ void perfSetTweak(const char *name, XTSCommon *cipher, const struct TestVector *
 
 void setup()
 {
-    Serial.begin(115200);
+    Serial.begin(9600);
 
     Serial.println();
 

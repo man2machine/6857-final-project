@@ -21,7 +21,7 @@ unsigned long startTime;
 size_t length = 48; // First block should wait for the pool to fill up.
 
 void setup() {
-    Serial.begin(115200);
+    Serial.begin(9600);
     Serial.println("start");
 
     // Initialize the random number generator.
