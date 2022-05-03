@@ -11,6 +11,10 @@ import subprocess
 
 from project_6857.utils import get_rel_pkg_path
 
+system_name = input("Enter system name (default raspi_zero_w):").strip()
+if system_name.strip() == "":
+    system_name = "raspi_zero_w"
+
 search_glob = os.path.join(
     get_rel_pkg_path("raspi_tests/"), "*", "*.cpp")
 raspi_test_fnames = glob.glob(search_glob, recursive=True)
@@ -22,7 +26,7 @@ for raspi_test_fname in raspi_test_fnames:
     raspi_test_exec_fname = os.path.join(
         get_rel_pkg_path("bin/"), test_type_dir, test_exec_name)
     output_fname = os.path.join(
-        get_rel_pkg_path("outputs/raspi/"), test_type_dir, test_exec_name)
+        get_rel_pkg_path("outputs/"), system_name, test_type_dir, test_exec_name)
     os.makedirs(output_fname.rpartition(os.path.sep)[0], exist_ok=True)
     cmd = "{} > {}.txt".format(raspi_test_exec_fname, output_fname)
     print("Running {}".format(test_exec_name))
