@@ -42,7 +42,7 @@ AES128 aes128;
 
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   aes128.setKey(key,16);// Setting Key for AES
   
   Serial.print("Before Encryption:");

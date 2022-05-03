@@ -502,7 +502,7 @@ void testSign()
 
 void setup()
 {
-    Serial.begin(115200);
+    Serial.begin(9600);
 
     // Start the random number generator.  We don't initialise a noise
     // source here because we don't need one for testing purposes.
