@@ -123,7 +123,7 @@ void perfCipher(BlockCipher *cipher, const struct TestVector *test)
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(115200);
 
     Serial.println();
 

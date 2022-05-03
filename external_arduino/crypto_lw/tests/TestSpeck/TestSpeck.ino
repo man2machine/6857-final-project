@@ -155,7 +155,7 @@ void perfCipher(BlockCipher *cipher, const struct TestVector *test, size_t keySi
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(115200);
 
     Serial.println();
 

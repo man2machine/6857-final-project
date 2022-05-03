@@ -372,7 +372,7 @@ void testPackUnpack(void)
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(115200);
 
     testPackUnpack();
 }

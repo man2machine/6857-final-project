@@ -425,7 +425,7 @@ void perfMasked(const aead_cipher_t *ref_cipher,
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(115200);
     Serial.println();
     // Test ChaChaPoly and BLAKE2s first to get the reference time
     // for other algorithms.

@@ -210,7 +210,7 @@ void perfCipherDecrypt(const char *name, Cipher *cipher, const struct TestVector
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(115200);
 
     Serial.println();
 

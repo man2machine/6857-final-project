@@ -211,7 +211,7 @@ void perfPoly1305Finalize(Poly1305 *hash)
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(115200);
 
     Serial.println();
 
